@@ -1,0 +1,43 @@
+@extends('layout')
+
+@section('title', 'Технические спецификации - 2D')
+@section('meta_description', 'Технические спецификации и таблицы соответствия для керамической плитки и керамогранита.')
+
+@php
+    $specifications = app(App\Services\ReportParserService::class)->getSpecifications();
+@endphp
+
+@section('content')
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Технические спецификации (2D)</h1>
+
+        <div class="bg-white shadow-md rounded my-6">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="py-3 px-6 text-left">Описание</th>
+                        <th class="py-3 px-6 text-left">Дата</th>
+                        <th class="py-3 px-6 text-center">Скачать</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm">
+                    @forelse($specifications as $spec)
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6">{{ $spec->description }}</td>
+                            <td class="py-3 px-6">{{ $spec->date }}</td>
+                            <td class="py-3 px-6 text-center">
+                                <a href="{{ $spec->downloadUrl }}" class="text-blue-500 hover:text-blue-700" target="_blank" rel="noopener noreferrer">
+                                    Скачать ({{ $spec->fileType }}, {{ $spec->fileSize }})
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" class="text-center py-4">Данные не найдены. Убедитесь, что файл 'otch/specifications.xls' существует и содержит данные.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+@endsection
