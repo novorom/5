@@ -253,7 +253,7 @@ export default function ProductPage() {
               <div className="max-w-3xl">
                 <p className="text-foreground/80 leading-relaxed">{product.description}</p>
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {product.rooms.map((room) => (
+                  {(product.rooms ?? []).map((room) => (
                     <span
                       key={room}
                       className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium"
