@@ -20,7 +20,7 @@
           <div>
               <div class="bg-white rounded-2xl shadow-sm border p-4">
                   @if($product->main_image)
-                      <img src="{{ $product->main_image }}" alt="{{ $product->name }}" class="w-full rounded-xl">
+                      <img src="{{ $product->main_image }}" alt="{{ $product->name }}" class="w-full rounded-xl" loading="eager">
                   @else
                       <div class="w-full aspect-square bg-gray-100 rounded-xl flex items-center justify-center">
                           <svg class="w-24 h-24 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
