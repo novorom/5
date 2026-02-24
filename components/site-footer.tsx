@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Phone, Mail, MapPin } from "lucide-react"
+import { Phone, Mail, MapPin, MessageCircle, Clock } from "lucide-react"
 
 const footerLinks = {
   catalog: [
@@ -42,17 +42,25 @@ export function SiteFooter() {
               Официальный дилер керамической плитки Cersanit в России. Более 750 наименований в наличии.
             </p>
             <div className="flex flex-col gap-2 text-sm">
-              <a href="tel:+78123091234" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
+              <a href="tel:+79052050900" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
                 <Phone className="h-4 w-4 shrink-0" />
-                +7 (812) 309-12-34
+                +7 (905) 205-09-00
               </a>
-              <a href="mailto:info@cersanit-shop.ru" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
+              <a href="mailto:novorom@mail.ru" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
                 <Mail className="h-4 w-4 shrink-0" />
-                info@cersanit-shop.ru
+                novorom@mail.ru
+              </a>
+              <a href="https://t.me/flyroman" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
+                <MessageCircle className="h-4 w-4 shrink-0" />
+                @flyroman
               </a>
               <span className="flex items-center gap-2 text-background/70">
                 <MapPin className="h-4 w-4 shrink-0" />
-                СПб, п. Янино-1
+                СПб, Янино-1, участок 37
+              </span>
+              <span className="flex items-center gap-2 text-background/70">
+                <Clock className="h-4 w-4 shrink-0" />
+                Ежедневно 10:00 - 17:00
               </span>
             </div>
           </div>

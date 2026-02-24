@@ -3,8 +3,9 @@
 import { useState, KeyboardEvent } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Search, Heart, ShoppingCart, Menu, X, Phone } from "lucide-react"
+import { Search, Heart, ShoppingCart, Menu, X, Phone, MessageCircle } from "lucide-react"
 import { Logo } from "./logo"
+import { useCart } from "@/lib/cart-context"
 
 const navLinks = [
   { href: "/catalog", label: "Каталог" },
@@ -16,6 +17,7 @@ const navLinks = [
 
 export function SiteHeader() {
   const router = useRouter()
+  const { items } = useCart()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
@@ -38,14 +40,18 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 bg-background border-b border-border">
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-7xl px-4 flex items-center justify-between h-9 text-sm">
+        <div className="mx-auto max-w-7xl px-4 flex items-center justify-between h-auto py-2.5 text-sm flex-wrap gap-3">
           <span className="hidden sm:block">Официальный дилер Cersanit в России</span>
-          <div className="flex items-center gap-4">
-            <a href="tel:+78123091234" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-              <Phone className="h-3.5 w-3.5" />
-              <span>+7 (812) 309-12-34</span>
+          <div className="flex items-center gap-4 flex-wrap">
+            <a href="tel:+79052050900" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+              <Phone className="h-3.5 w-3.5 shrink-0" />
+              <span>+7 (905) 205-09-00</span>
             </a>
-            <span className="hidden sm:block text-primary-foreground/70">Пн-Пт 9:00-18:00</span>
+            <span className="text-primary-foreground/70">Ежедневно 10:00-18:00</span>
+            <a href="https://t.me/flyroman" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+              <MessageCircle className="h-3.5 w-3.5 shrink-0" />
+              <span>@flyroman</span>
+            </a>
           </div>
         </div>
       </div>
@@ -85,7 +91,7 @@ export function SiteHeader() {
             <button
               onClick={handleSearch}
               className="absolute right-2.5 hover:opacity-70 transition-opacity"
-              aria-label="Искать"
+              aria-label="Search"
             >
               <Search className="h-4 w-4 text-muted-foreground" />
             </button>
@@ -93,26 +99,32 @@ export function SiteHeader() {
           <button
             onClick={() => setSearchOpen(!searchOpen)}
             className="lg:hidden p-2 rounded-lg hover:bg-accent transition-colors"
-            aria-label="Поиск"
+            aria-label="Search"
           >
             <Search className="h-5 w-5 text-foreground/70" />
           </button>
 
-          <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Избранное">
+          <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Favourites">
             <Heart className="h-5 w-5 text-foreground/70" />
           </button>
-          <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Корзина">
+          <button 
+            onClick={() => router.push('/cart')}
+            className="p-2 rounded-lg hover:bg-accent transition-colors relative" 
+            aria-label="Cart"
+          >
             <ShoppingCart className="h-5 w-5 text-foreground/70" />
-            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
-              0
-            </span>
+            {items.length > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
+                {items.length}
+              </span>
+            )}
           </button>
 
           {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg hover:bg-accent transition-colors"
-            aria-label="Меню"
+            aria-label="Menu"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5 text-foreground/70" />

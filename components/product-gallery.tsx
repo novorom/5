@@ -4,11 +4,11 @@ import { useState } from "react"
 import Image from "next/image"
 
 interface ProductGalleryProps {
-  images: string[]
+  images?: string[]
   name: string
 }
 
-export function ProductGallery({ images, name }: ProductGalleryProps) {
+export function ProductGallery({ images = [], name }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   // Ensure at least 1 image
@@ -24,6 +24,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
           fill
           className="object-contain p-4"
           priority
+          loading="eager"
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>

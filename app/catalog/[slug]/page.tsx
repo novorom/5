@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import {
   ChevronRight,
@@ -14,14 +14,17 @@ import {
   Plus,
   MapPin,
 } from "lucide-react"
-import { products } from "@/lib/mock-data"
+import { products } from "@/lib/products-data"
 import { ProductGallery } from "@/components/product-gallery"
 import { ProductCard } from "@/components/product-card"
+import { useCart } from "@/lib/cart-context"
 
 type TabId = "description" | "specs" | "delivery"
 
 export default function ProductPage() {
   const params = useParams()
+  const router = useRouter()
+  const { addItem } = useCart()
   const slug = params.slug as string
   const product = products.find((p) => p.slug === slug) || products[0]
   const [activeTab, setActiveTab] = useState<TabId>("description")
@@ -32,7 +35,18 @@ export default function ProductPage() {
     .filter((p) => p.collection === product.collection && p.id !== product.id)
     .slice(0, 4)
 
-  const totalStock = product.stock_yanino + product.stock_factory
+  const handleAddToCart = () => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price_retail,
+      quantity,
+      image: product.main_image || product.images?.[0],
+    })
+    router.push('/cart')
+  }
+
+  const totalStock = (product.stock_yanino ?? 0) + (product.stock_factory ?? 0)
   const hasDiscount = product.price_official && product.price_official > product.price_retail
 
   const tabs: { id: TabId; label: string }[] = [
@@ -81,7 +95,7 @@ export default function ProductPage() {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Gallery */}
           <div className="lg:w-1/2">
-            <ProductGallery images={product.images} name={product.name} />
+            <ProductGallery images={product.images || []} name={product.name} />
           </div>
 
           {/* Product info */}
@@ -138,13 +152,13 @@ export default function ProductPage() {
               </div>
               {totalStock > 0 && (
                 <div className="flex flex-col gap-1.5 text-sm text-muted-foreground">
-                  {product.stock_yanino > 0 && (
+                  {(product.stock_yanino ?? 0) > 0 && (
                     <div className="flex items-center gap-2">
                       <MapPin className="h-3.5 w-3.5" />
                       <span>Склад Янино: {product.stock_yanino} м²</span>
                     </div>
                   )}
-                  {product.stock_factory > 0 && (
+                  {(product.stock_factory ?? 0) > 0 && (
                     <div className="flex items-center gap-2">
                       <Package className="h-3.5 w-3.5" />
                       <span>Завод: {product.stock_factory} м²</span>
@@ -178,7 +192,10 @@ export default function ProductPage() {
               </div>
 
               {/* Add to cart */}
-              <button className="flex-1 h-11 inline-flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors">
+              <button 
+                onClick={handleAddToCart}
+                className="flex-1 h-11 inline-flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
+              >
                 <ShoppingCart className="h-4 w-4" />
                 В корзину{" "}
                 <span className="text-primary-foreground/70">
@@ -253,7 +270,7 @@ export default function ProductPage() {
               <div className="max-w-3xl">
                 <p className="text-foreground/80 leading-relaxed">{product.description}</p>
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {product.rooms.map((room) => (
+                  {(product.rooms ?? []).map((room) => (
                     <span
                       key={room}
                       className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium"
