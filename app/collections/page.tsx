@@ -4,35 +4,39 @@ import { useState, useMemo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ChevronDown, ChevronRight, SlidersHorizontal, X } from "lucide-react"
-import { products } from "@/lib/products-data"
 import { filterOptions } from "@/lib/filter-options"
+import { useProducts } from "@/lib/products-context"
 
 /* ---------- derived data ---------- */
 // Generate collections from products
-const allCollections = [...new Set(products.map((p) => p.collection))].sort()
-const collections = allCollections.map((collName) => ({
-  id: collName,
-  name: collName,
-  slug: collName.toLowerCase().replace(/\s+/g, "-"),
-  image: "",
-  product_count: products.filter((p) => p.collection === collName).length,
-}))
+function CollectionsPage() {
+  const { products } = useProducts()
+  
+  // Generate collections from products
+  const allCollections = [...new Set(products.map((p) => p.collection))].sort()
+  const collections = allCollections.map((collName) => ({
+    id: collName,
+    name: collName,
+    slug: collName.toLowerCase().replace(/\s+/g, "-"),
+    image: "",
+    product_count: products.filter((p) => p.collection === collName).length,
+  }))
 
-const collectionsWithMeta = collections.map((c) => {
-  const collProducts = products.filter((p) => p.collection === c.name)
-  const types = [...new Set(collProducts.map((p) => p.product_type))]
-  const colors = [...new Set(collProducts.map((p) => p.color))]
-  const surfaces = [...new Set(collProducts.map((p) => p.surface))]
-  const isNew = collProducts.some((p) => p.is_new)
-  const isBestseller = collProducts.some((p) => p.is_bestseller)
-  return { ...c, types, colors, surfaces, isNew, isBestseller, realCount: collProducts.length }
-})
+  const collectionsWithMeta = collections.map((c) => {
+    const collProducts = products.filter((p) => p.collection === c.name)
+    const types = [...new Set(collProducts.map((p) => p.product_type))]
+    const colors = [...new Set(collProducts.map((p) => p.color))]
+    const surfaces = [...new Set(collProducts.map((p) => p.surface))]
+    const isNew = collProducts.some((p) => p.is_new)
+    const isBestseller = collProducts.some((p) => p.is_bestseller)
+    return { ...c, types, colors, surfaces, isNew, isBestseller, realCount: collProducts.length }
+  })
 
-const allTypes = [...new Set(collectionsWithMeta.flatMap((c) => c.types))].sort()
-const allColors = filterOptions.colors
-const allDimensions = filterOptions.dimensions
-const allDesigns = filterOptions.designs
-const allSurfaceTypes = filterOptions.surface_types
+  const allTypes = [...new Set(collectionsWithMeta.flatMap((c) => c.types))].sort()
+  const allColors = filterOptions.colors
+  const allDimensions = filterOptions.dimensions
+  const allDesigns = filterOptions.designs
+  const allSurfaceTypes = filterOptions.surface_types
 
 /* ---------- Filter sidebar section ---------- */
 function FilterSection({
@@ -97,6 +101,35 @@ function FilterSection({
 
 /* ---------- Main page ---------- */
 export default function CollectionsPage() {
+  const { products } = useProducts()
+  
+  // Generate collections from products
+  const allCollections = [...new Set(products.map((p) => p.collection))].sort()
+  const collections = allCollections.map((collName) => ({
+    id: collName,
+    name: collName,
+    slug: collName.toLowerCase().replace(/\s+/g, "-"),
+    image: "",
+    product_count: products.filter((p) => p.collection === collName).length,
+  }))
+
+  const collectionsWithMeta = collections.map((c) => {
+    const collProducts = products.filter((p) => p.collection === c.name)
+    const types = [...new Set(collProducts.map((p) => p.product_type))]
+    const colors = [...new Set(collProducts.map((p) => p.color))]
+    const surfaces = [...new Set(collProducts.map((p) => p.surface))]
+    const isNew = collProducts.some((p) => p.is_new)
+    const isBestseller = collProducts.some((p) => p.is_bestseller)
+    return { ...c, types, colors, surfaces, isNew, isBestseller, realCount: collProducts.length }
+  })
+
+  const allTypes = [...new Set(collectionsWithMeta.flatMap((c) => c.types))].sort()
+  const allColors = filterOptions.colors
+  const allDimensions = filterOptions.dimensions
+  const allDesigns = filterOptions.designs
+  const allSurfaceTypes = filterOptions.surface_types
+
+  const CollectionsPageContent = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [selectedDimensions, setSelectedDimensions] = useState<string[]>([])
@@ -419,4 +452,7 @@ export default function CollectionsPage() {
       </div>
     </div>
   )
+  }
+
+  return <CollectionsPageContent />
 }

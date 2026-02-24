@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/delivery", label: "Доставка" },
   { href: "/about", label: "О компании" },
   { href: "/contacts", label: "Контакты" },
+  { href: "/admin", label: "Админ", isAdmin: true },
 ]
 
 export function SiteHeader() {
@@ -69,7 +70,11 @@ export function SiteHeader() {
             <Link
               key={link.label}
               href={link.href}
-              className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors rounded-lg hover:bg-primary/5"
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                link.isAdmin
+                  ? "text-destructive hover:bg-destructive/10 bg-destructive/5"
+                  : "text-foreground/80 hover:text-primary hover:bg-primary/5"
+              }`}
             >
               {link.label}
             </Link>
@@ -144,7 +149,11 @@ export function SiteHeader() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                className={`px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                  link.isAdmin
+                    ? "text-destructive hover:bg-destructive/10 bg-destructive/5"
+                    : "text-foreground/80 hover:text-primary hover:bg-primary/5"
+                }`}
               >
                 {link.label}
               </Link>

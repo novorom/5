@@ -4,11 +4,11 @@ import { useState, useMemo, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { SlidersHorizontal, ChevronRight, Grid3X3, LayoutGrid } from "lucide-react"
-import { products } from "@/lib/products-data"
 import { collections } from "@/lib/mock-data"
 import { filterOptions } from "@/lib/filter-options"
 import { ProductCard } from "@/components/product-card"
 import { CatalogFilters, MobileFilterDrawer } from "@/components/catalog-filters"
+import { useProducts } from "@/lib/products-context"
 
 const sortOptions = [
   { value: "popular", label: "По популярности" },
@@ -27,6 +27,7 @@ export default function CatalogPage() {
 
 function CatalogContent() {
   const searchParams = useSearchParams()
+  const { products } = useProducts()
   const collectionSlug = searchParams.get("collection")
   const productType = searchParams.get("product_type")
   const searchQuery = searchParams.get("search") || ""

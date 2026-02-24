@@ -14,10 +14,10 @@ import {
   Plus,
   MapPin,
 } from "lucide-react"
-import { products } from "@/lib/products-data"
 import { ProductGallery } from "@/components/product-gallery"
 import { ProductCard } from "@/components/product-card"
 import { useCart } from "@/lib/cart-context"
+import { useProducts } from "@/lib/products-context"
 
 type TabId = "description" | "specs" | "delivery"
 
@@ -25,6 +25,7 @@ export default function ProductPage() {
   const params = useParams()
   const router = useRouter()
   const { addItem } = useCart()
+  const { products } = useProducts()
   const slug = params.slug as string
   const product = products.find((p) => p.slug === slug) || products[0]
   const [activeTab, setActiveTab] = useState<TabId>("description")

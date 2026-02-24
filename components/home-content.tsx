@@ -1,17 +1,18 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Truck, ShieldCheck, Award, ChevronRight } from "lucide-react"
 import { categories, collections } from "@/lib/mock-data"
 import { ProductCard } from "@/components/product-card"
-import { HomeContent } from "@/components/home-content"
+import { useProducts } from "@/lib/products-context"
 
-export default function HomePage() {
+export function HomeContent() {
+  const { products } = useProducts()
+  const popularProducts = products.filter((p) => p.is_bestseller).slice(0, 8)
+
   return (
-    <div className="flex flex-col">
-      <HomeContent />
-    </div>
-  )
-}
+    <>
       {/* Hero Section */}
       <section className="relative h-[520px] lg:h-[600px] overflow-hidden">
         <Image
@@ -251,6 +252,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   )
 }
