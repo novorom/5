@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import {
   ChevronRight,
@@ -17,11 +17,14 @@ import {
 import { products } from "@/lib/products-data"
 import { ProductGallery } from "@/components/product-gallery"
 import { ProductCard } from "@/components/product-card"
+import { useCart } from "@/lib/cart-context"
 
 type TabId = "description" | "specs" | "delivery"
 
 export default function ProductPage() {
   const params = useParams()
+  const router = useRouter()
+  const { addItem } = useCart()
   const slug = params.slug as string
   const product = products.find((p) => p.slug === slug) || products[0]
   const [activeTab, setActiveTab] = useState<TabId>("description")
@@ -31,6 +34,17 @@ export default function ProductPage() {
   const relatedProducts = products
     .filter((p) => p.collection === product.collection && p.id !== product.id)
     .slice(0, 4)
+
+  const handleAddToCart = () => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price_retail,
+      quantity,
+      image: product.main_image || product.images?.[0],
+    })
+    router.push('/cart')
+  }
 
   const totalStock = (product.stock_yanino ?? 0) + (product.stock_factory ?? 0)
   const hasDiscount = product.price_official && product.price_official > product.price_retail
@@ -178,7 +192,10 @@ export default function ProductPage() {
               </div>
 
               {/* Add to cart */}
-              <button className="flex-1 h-11 inline-flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors">
+              <button 
+                onClick={handleAddToCart}
+                className="flex-1 h-11 inline-flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
+              >
                 <ShoppingCart className="h-4 w-4" />
                 В корзину{" "}
                 <span className="text-primary-foreground/70">

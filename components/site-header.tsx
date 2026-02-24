@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Search, Heart, ShoppingCart, Menu, X, Phone } from "lucide-react"
 import { Logo } from "./logo"
+import { useCart } from "@/lib/cart-context"
 
 const navLinks = [
   { href: "/catalog", label: "Каталог" },
@@ -16,6 +17,7 @@ const navLinks = [
 
 export function SiteHeader() {
   const router = useRouter()
+  const { items } = useCart()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
@@ -101,11 +103,17 @@ export function SiteHeader() {
           <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Favourites">
             <Heart className="h-5 w-5 text-foreground/70" />
           </button>
-          <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Cart">
+          <button 
+            onClick={() => router.push('/cart')}
+            className="p-2 rounded-lg hover:bg-accent transition-colors relative" 
+            aria-label="Cart"
+          >
             <ShoppingCart className="h-5 w-5 text-foreground/70" />
-            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
-              0
-            </span>
+            {items.length > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
+                {items.length}
+              </span>
+            )}
           </button>
 
           {/* Mobile menu toggle */}
