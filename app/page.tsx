@@ -8,12 +8,12 @@ import { ProductCard } from "@/components/product-card"
 export default function HomePage() {
   const popularProducts = products.filter((p) => p.is_bestseller).slice(0, 8)
   
-  // Get first product image for each category
+  // Get best product image for each category (prefer collection_image for nice display)
   const categoryImages = {
-    "Плитка": products.find(p => p.product_type === "Плитка")?.main_image,
-    "Керамогранит": products.find(p => p.product_type === "Керамогранит")?.main_image,
-    "Мозаика на сетке": products.find(p => p.product_type === "Мозаика на сетке")?.main_image,
-    "Ступень": products.find(p => p.product_type === "Ступень")?.main_image,
+    "Плитка": products.find(p => p.product_type === "Плитка")?.collection_image || products.find(p => p.product_type === "Плитка")?.main_image,
+    "Керамогранит": products.find(p => p.product_type === "Керамогранит")?.collection_image || products.find(p => p.product_type === "Керамогранит")?.main_image,
+    "Мозаика на сетке": products.find(p => p.product_type === "Мозаика на сетке")?.collection_image || products.find(p => p.product_type === "Мозаика на сетке")?.main_image,
+    "Ступень": products.find(p => p.product_type === "Ступень")?.collection_image || products.find(p => p.product_type === "Ступень")?.main_image,
   }
 
   return (
