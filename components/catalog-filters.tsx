@@ -123,7 +123,7 @@ export function CatalogFilters({
           {openSections.includes(section.key) && (
             <div className="mt-1 flex flex-col gap-1">
               {section.options.map((option) => {
-                const isActive = activeFilters[section.key]?.includes(option)
+                const isActive = (activeFilters[section.key] ?? []).includes(option)
                 return (
                   <label
                     key={option}
@@ -144,7 +144,7 @@ export function CatalogFilters({
                     </div>
                     <input
                       type="checkbox"
-                      checked={isActive}
+                      checked={isActive ?? false}
                       onChange={() => onFilterChange(section.key, option)}
                       className="sr-only"
                     />
