@@ -5192,8 +5192,13 @@ export const products: Product[] = [
     sku: "16523",
     name: "Плитка керамическая",
     slug: "a16523",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5201,8 +5206,13 @@ export const products: Product[] = [
     sku: "16427",
     name: "Плитка керамическая",
     slug: "a16427",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5210,8 +5220,13 @@ export const products: Product[] = [
     sku: "16429",
     name: "Плитка керамическая",
     slug: "a16429",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5219,8 +5234,13 @@ export const products: Product[] = [
     sku: "16431",
     name: "Плитка керамическая",
     slug: "a16431",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5228,8 +5248,13 @@ export const products: Product[] = [
     sku: "16783",
     name: "Плитка керамическая",
     slug: "a16783",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5237,8 +5262,13 @@ export const products: Product[] = [
     sku: "16785",
     name: "Плитка керамическая",
     slug: "a16785",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5246,8 +5276,13 @@ export const products: Product[] = [
     sku: "17129",
     name: "Плитка керамическая",
     slug: "a17129",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5255,8 +5290,13 @@ export const products: Product[] = [
     sku: "17130",
     name: "Плитка керамическая",
     slug: "a17130",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5264,8 +5304,13 @@ export const products: Product[] = [
     sku: "17131",
     name: "Плитка керамическая",
     slug: "a17131",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5273,8 +5318,13 @@ export const products: Product[] = [
     sku: "AM4R092",
     name: "Плитка керамическая",
     slug: "am4r092",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5282,8 +5332,13 @@ export const products: Product[] = [
     sku: "FS4R452",
     name: "Плитка керамическая",
     slug: "fs4r452",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5291,8 +5346,13 @@ export const products: Product[] = [
     sku: "LO4R452",
     name: "Плитка керамическая",
     slug: "lo4r452",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5300,8 +5360,13 @@ export const products: Product[] = [
     sku: "RSL051",
     name: "Плитка керамическая",
     slug: "rsl051",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5309,8 +5374,13 @@ export const products: Product[] = [
     sku: "RSL231",
     name: "Плитка керамическая",
     slug: "rsl231",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5318,8 +5388,13 @@ export const products: Product[] = [
     sku: "17418",
     name: "Плитка керамическая",
     slug: "a17418",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5327,8 +5402,13 @@ export const products: Product[] = [
     sku: "17419",
     name: "Плитка керамическая",
     slug: "a17419",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5336,8 +5416,13 @@ export const products: Product[] = [
     sku: "17420",
     name: "Плитка керамическая",
     slug: "a17420",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5345,8 +5430,13 @@ export const products: Product[] = [
     sku: "17421",
     name: "Плитка керамическая",
     slug: "a17421",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5354,8 +5444,13 @@ export const products: Product[] = [
     sku: "17422",
     name: "Плитка керамическая",
     slug: "a17422",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5363,8 +5458,13 @@ export const products: Product[] = [
     sku: "17423",
     name: "Плитка керамическая",
     slug: "a17423",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5372,8 +5472,13 @@ export const products: Product[] = [
     sku: "17424",
     name: "Плитка керамическая",
     slug: "a17424",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5381,8 +5486,13 @@ export const products: Product[] = [
     sku: "17425",
     name: "Плитка керамическая",
     slug: "a17425",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5390,8 +5500,13 @@ export const products: Product[] = [
     sku: "17426",
     name: "Плитка керамическая",
     slug: "a17426",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5399,8 +5514,13 @@ export const products: Product[] = [
     sku: "17427",
     name: "Плитка керамическая",
     slug: "a17427",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5408,8 +5528,13 @@ export const products: Product[] = [
     sku: "16775",
     name: "Плитка керамическая",
     slug: "a16775",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5417,8 +5542,13 @@ export const products: Product[] = [
     sku: "16777",
     name: "Плитка керамическая",
     slug: "a16777",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5426,8 +5556,13 @@ export const products: Product[] = [
     sku: "16779",
     name: "Плитка керамическая",
     slug: "a16779",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5435,8 +5570,13 @@ export const products: Product[] = [
     sku: "17950",
     name: "Плитка керамическая",
     slug: "a17950",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5444,8 +5584,13 @@ export const products: Product[] = [
     sku: "17952",
     name: "Плитка керамическая",
     slug: "a17952",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   },
   {
@@ -5453,8 +5598,13 @@ export const products: Product[] = [
     sku: "EFF-WGA011",
     name: "Плитка керамическая",
     slug: "eff-wga011",
+    brand: "Cersanit",
     collection: "Other",
-    category: "Tiles",
+    product_type: "Плитка",
+    format: "unknown",
+    surface: "матовая",
+    color: "unknown",
+    application: "Универсальный",
     price_retail: 0
   }
 ];
