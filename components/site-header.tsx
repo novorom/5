@@ -11,7 +11,7 @@ const navLinks = [
   { href: "/catalog", label: "Каталог" },
   { href: "/collections", label: "Коллекции" },
   { href: "/delivery", label: "Доставка" },
-  { href: "#", label: "О компании" },
+  { href: "/about", label: "О компании" },
   { href: "#", label: "Контакты" },
 ]
 
