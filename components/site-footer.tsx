@@ -26,9 +26,9 @@ const footerLinks = {
 
 export function SiteFooter() {
   return (
-    <footer className="bg-foreground text-background">
-      <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-foreground text-background" suppressHydrationWarning>
+      <div className="mx-auto max-w-7xl px-4 py-12" suppressHydrationWarning>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" suppressHydrationWarning>
           {/* Brand */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
@@ -72,10 +72,11 @@ export function SiteFooter() {
             <h3 className="text-sm font-semibold text-background mb-4">Каталог</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.catalog.map((link) => (
-                <li key={link.label}>
+                <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
                     className="text-sm text-background/60 hover:text-background transition-colors"
+                    suppressHydrationWarning
                   >
                     {link.label}
                   </Link>
@@ -89,10 +90,11 @@ export function SiteFooter() {
             <h3 className="text-sm font-semibold text-background mb-4">Информация</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.info.map((link) => (
-                <li key={link.label}>
+                <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
                     className="text-sm text-background/60 hover:text-background transition-colors"
+                    suppressHydrationWarning
                   >
                     {link.label}
                   </Link>
@@ -106,10 +108,11 @@ export function SiteFooter() {
             <h3 className="text-sm font-semibold text-background mb-4">Покупателям</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.help.map((link) => (
-                <li key={link.label}>
+                <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
                     className="text-sm text-background/60 hover:text-background transition-colors"
+                    suppressHydrationWarning
                   >
                     {link.label}
                   </Link>
