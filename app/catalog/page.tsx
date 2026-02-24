@@ -116,6 +116,12 @@ function CatalogContent() {
           formats: "format",
           surfaces: "surface",
           applications: "application",
+          textures: "surface",
+          surface_types: "surface",
+          materials: "material_type",
+          designs: "collection",
+          purposes: "application",
+          commercial_uses: "application",
         }
         const field = fieldMap[key]
         if (!field) return true
