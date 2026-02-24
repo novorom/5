@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react"
+import { Phone, Mail, MapPin, MessageCircle, Clock } from "lucide-react"
 
 const footerLinks = {
   catalog: [
@@ -56,7 +56,11 @@ export function SiteFooter() {
               </a>
               <span className="flex items-center gap-2 text-background/70">
                 <MapPin className="h-4 w-4 shrink-0" />
-                СПб, п. Янино-1
+                СПб, Янино-1, участок 37
+              </span>
+              <span className="flex items-center gap-2 text-background/70">
+                <Clock className="h-4 w-4 shrink-0" />
+                Ежедневно 10:00 - 17:00
               </span>
             </div>
           </div>
