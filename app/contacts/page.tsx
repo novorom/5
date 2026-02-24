@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { Mail, Phone, MessageSquare, MapPin, Send } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
 
 export default function ContactsPage() {
   const [formData, setFormData] = useState({
@@ -253,13 +252,13 @@ ${formData.message}
                 />
               </div>
 
-              <Button 
+              <button 
                 type="submit"
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-all"
               >
                 <Send className="w-5 h-5" />
                 Отправить сообщение
-              </Button>
+              </button>
             </form>
           </div>
         </div>
