@@ -12,6 +12,8 @@ import {
 import { verifyAdminAccess } from "@/lib/admin-auth"
 import { useProducts } from "@/lib/products-context"
 
+export const dynamic = "force-dynamic"
+
 interface ProcessingResult {
   fileType: string
   result: ExcelProcessResult
