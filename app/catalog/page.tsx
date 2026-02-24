@@ -94,7 +94,6 @@ function CatalogContent() {
           product_types: "product_type",
           colors: "color",
           dimensions: "format",
-          designs: "collection",
           textures: "surface",
           surface_types: "surface",
         }
