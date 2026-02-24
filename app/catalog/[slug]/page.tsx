@@ -138,13 +138,13 @@ export default function ProductPage() {
               </div>
               {totalStock > 0 && (
                 <div className="flex flex-col gap-1.5 text-sm text-muted-foreground">
-                  {product.stock_yanino > 0 && (
+                  {(product.stock_yanino ?? 0) > 0 && (
                     <div className="flex items-center gap-2">
                       <MapPin className="h-3.5 w-3.5" />
                       <span>Склад Янино: {product.stock_yanino} м²</span>
                     </div>
                   )}
-                  {product.stock_factory > 0 && (
+                  {(product.stock_factory ?? 0) > 0 && (
                     <div className="flex items-center gap-2">
                       <Package className="h-3.5 w-3.5" />
                       <span>Завод: {product.stock_factory} м²</span>
