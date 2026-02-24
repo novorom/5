@@ -94,7 +94,6 @@ function CatalogContent() {
     // Apply filters
     Object.entries(activeFilters).forEach(([key, values]) => {
       if (values.length === 0) return
-      console.log(`[v0] Filtering by ${key}:`, values)
       result = result.filter((p) => {
         const fieldMap: Record<string, string> = {
           product_types: "product_type",
@@ -116,8 +115,6 @@ function CatalogContent() {
     result = result.filter(
       (p) => p.price_retail >= priceRange[0] && p.price_retail <= priceRange[1]
     )
-
-    console.log(`[v0] Filtered products count: ${result.length}`)
 
     // Sort
     switch (sort) {
