@@ -11,16 +11,14 @@ import { filterOptions } from "@/lib/filter-options"
 const collectionsWithMeta = collections.map((c) => {
   const collProducts = products.filter((p) => p.collection === c.name)
   const types = [...new Set(collProducts.map((p) => p.product_type))]
-  const formats = [...new Set(collProducts.map((p) => p.format))]
   const colors = [...new Set(collProducts.map((p) => p.color))]
   const surfaces = [...new Set(collProducts.map((p) => p.surface))]
   const isNew = collProducts.some((p) => p.is_new)
   const isBestseller = collProducts.some((p) => p.is_bestseller)
-  return { ...c, types, formats, colors, surfaces, isNew, isBestseller, realCount: collProducts.length }
+  return { ...c, types, colors, surfaces, isNew, isBestseller, realCount: collProducts.length }
 })
 
 const allTypes = [...new Set(collectionsWithMeta.flatMap((c) => c.types))].sort()
-const allFormats = [...new Set(products.map((p) => p.format))].sort()
 const allColors = filterOptions.colors
 const allDimensions = filterOptions.dimensions
 const allDesigns = filterOptions.designs
@@ -92,7 +90,6 @@ function FilterSection({
 export default function CollectionsPage() {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
-  const [selectedFormats, setSelectedFormats] = useState<string[]>([])
   const [selectedDimensions, setSelectedDimensions] = useState<string[]>([])
   const [selectedDesigns, setSelectedDesigns] = useState<string[]>([])
   const [selectedTextures, setSelectedTextures] = useState<string[]>([])
@@ -104,16 +101,13 @@ export default function CollectionsPage() {
     setArr(arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value])
   }
 
-  const activeFilterCount = selectedTypes.length + selectedColors.length + selectedFormats.length + selectedDimensions.length + selectedDesigns.length + selectedTextures.length + selectedSurfaceTypes.length
+  const activeFilterCount = selectedTypes.length + selectedColors.length + selectedDimensions.length + selectedDesigns.length + selectedTextures.length + selectedSurfaceTypes.length
 
   const filtered = useMemo(() => {
     let result = [...collectionsWithMeta]
 
     if (selectedTypes.length > 0) {
       result = result.filter((c) => c.types.some((t) => selectedTypes.includes(t)))
-    }
-    if (selectedFormats.length > 0) {
-      result = result.filter((c) => c.formats.some((f) => selectedFormats.includes(f)))
     }
     if (selectedColors.length > 0) {
       result = result.filter((c) => c.colors.some((col) => selectedColors.includes(col)))
@@ -135,12 +129,11 @@ export default function CollectionsPage() {
     }
 
     return result
-  }, [selectedTypes, selectedFormats, selectedColors, selectedSurfaceTypes, sortBy])
+  }, [selectedTypes, selectedColors, selectedSurfaceTypes, sortBy])
 
   const clearFilters = () => {
     setSelectedTypes([])
     setSelectedColors([])
-    setSelectedFormats([])
     setSelectedDimensions([])
     setSelectedDesigns([])
     setSelectedTextures([])
@@ -163,13 +156,7 @@ export default function CollectionsPage() {
         onToggle={toggleFilter(selectedColors, setSelectedColors)}
       />
       <FilterSection
-        title="Формат плитки, см"
-        options={allFormats}
-        selected={selectedFormats}
-        onToggle={toggleFilter(selectedFormats, setSelectedFormats)}
-      />
-      <FilterSection
-        title="Габариты"
+        title="Размер"
         options={allDimensions}
         selected={selectedDimensions}
         onToggle={toggleFilter(selectedDimensions, setSelectedDimensions)}
@@ -281,16 +268,6 @@ export default function CollectionsPage() {
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors"
               >
                 {c}
-                <X className="h-3 w-3" />
-              </button>
-            ))}
-            {selectedFormats.map((f) => (
-              <button
-                key={f}
-                onClick={() => toggleFilter(selectedFormats, setSelectedFormats)(f)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors"
-              >
-                {f}
                 <X className="h-3 w-3" />
               </button>
             ))}

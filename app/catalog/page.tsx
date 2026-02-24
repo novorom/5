@@ -93,7 +93,6 @@ function CatalogContent() {
         const fieldMap: Record<string, string> = {
           product_types: "product_type",
           colors: "color",
-          formats: "format",
           dimensions: "format",
           designs: "collection",
           textures: "surface",
