@@ -4,10 +4,20 @@ import { useState, useMemo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ChevronDown, ChevronRight, SlidersHorizontal, X } from "lucide-react"
-import { collections, products } from "@/lib/mock-data"
+import { products } from "@/lib/products-data"
 import { filterOptions } from "@/lib/filter-options"
 
 /* ---------- derived data ---------- */
+// Generate collections from products
+const allCollections = [...new Set(products.map((p) => p.collection))].sort()
+const collections = allCollections.map((collName) => ({
+  id: collName,
+  name: collName,
+  slug: collName.toLowerCase().replace(/\s+/g, "-"),
+  image: "",
+  product_count: products.filter((p) => p.collection === collName).length,
+}))
+
 const collectionsWithMeta = collections.map((c) => {
   const collProducts = products.filter((p) => p.collection === c.name)
   const types = [...new Set(collProducts.map((p) => p.product_type))]
