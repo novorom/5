@@ -27,9 +27,6 @@ function AdminContent() {
   const [processingResults, setProcessingResults] = useState<ProcessingResult[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
   const [successMessage, setSuccessMessage] = useState("")
-  const [processingResults, setProcessingResults] = useState<ProcessingResult[]>([])
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [successMessage, setSuccessMessage] = useState("")
 
   const yaninoFileRef = useRef<HTMLInputElement>(null)
   const zavodFileRef = useRef<HTMLInputElement>(null)
@@ -374,7 +371,7 @@ function AdminContent() {
 
         {/* Stats */}
         <div className="mt-8 pt-8 border-t border-border">
-          <h3 className="font-semibold text-foreground mb-4">Статистика</h3>
+          <h3 className="font-semibold text-foreground mb-4">Статисти��а</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div className="bg-card border border-border rounded-lg p-4">
               <p className="text-xs text-muted-foreground mb-1">Всего товаров</p>
