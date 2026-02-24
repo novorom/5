@@ -42,10 +42,6 @@ function CatalogContent() {
   }, [productType])
 
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>(initialFilters)
-  const [priceRange, setPriceRange] = useState<[number, number]>([
-    filterOptions.price_range.min,
-    filterOptions.price_range.max,
-  ])
 
   // Sync filters when URL changes (e.g. navigating from collections page or categories)
   useEffect(() => {
@@ -75,7 +71,6 @@ function CatalogContent() {
 
   const handleClearAll = () => {
     setActiveFilters({})
-    setPriceRange([filterOptions.price_range.min, filterOptions.price_range.max])
   }
 
   const filteredProducts = useMemo(() => {
@@ -111,11 +106,6 @@ function CatalogContent() {
       })
     })
 
-    // Apply price filter
-    result = result.filter(
-      (p) => p.price_retail >= priceRange[0] && p.price_retail <= priceRange[1]
-    )
-
     // Sort
     switch (sort) {
       case "price_asc":
@@ -136,7 +126,7 @@ function CatalogContent() {
     }
 
     return result
-  }, [searchQuery, activeFilters, priceRange, sort])
+  }, [searchQuery, activeFilters, sort])
 
   const totalActiveFilters = Object.values(activeFilters).flat().length
 
@@ -251,9 +241,7 @@ function CatalogContent() {
             <div className="sticky top-28 bg-background rounded-xl border border-border p-5">
               <CatalogFilters
                 activeFilters={activeFilters}
-                priceRange={priceRange}
                 onFilterChange={handleFilterChange}
-                onPriceChange={setPriceRange}
                 onClearAll={handleClearAll}
               />
             </div>
@@ -298,9 +286,7 @@ function CatalogContent() {
       <MobileFilterDrawer isOpen={mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
         <CatalogFilters
           activeFilters={activeFilters}
-          priceRange={priceRange}
           onFilterChange={handleFilterChange}
-          onPriceChange={setPriceRange}
           onClearAll={handleClearAll}
         />
       </MobileFilterDrawer>

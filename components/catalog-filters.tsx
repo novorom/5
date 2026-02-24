@@ -22,17 +22,13 @@ const filterSections: FilterSection[] = [
 
 interface CatalogFiltersProps {
   activeFilters: Record<string, string[]>
-  priceRange: [number, number]
   onFilterChange: (key: string, value: string) => void
-  onPriceChange: (range: [number, number]) => void
   onClearAll: () => void
 }
 
 export function CatalogFilters({
   activeFilters,
-  priceRange,
   onFilterChange,
-  onPriceChange,
   onClearAll,
 }: CatalogFiltersProps) {
   const [openSections, setOpenSections] = useState<string[]>(["product_types", "colors"])
@@ -57,55 +53,6 @@ export function CatalogFilters({
           >
             Сбросить ({totalActiveFilters})
           </button>
-        )}
-      </div>
-
-      {/* Price Range */}
-      <div className="pb-4 mb-4 border-b border-border">
-        <button
-          onClick={() => toggleSection("price")}
-          className="flex items-center justify-between w-full py-2"
-        >
-          <span className="text-sm font-medium text-foreground">Цена, ₽</span>
-          <ChevronDown
-            className={`h-4 w-4 text-muted-foreground transition-transform ${
-              openSections.includes("price") ? "rotate-180" : ""
-            }`}
-          />
-        </button>
-        {openSections.includes("price") && (
-          <div className="mt-2 flex flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                inputMode="numeric"
-                value={priceRange[0]}
-                onChange={(e) => {
-                  const val = e.target.value.replace(/\D/g, "")
-                  const numVal = val === "" ? filterOptions.price_range.min : Math.max(Number(val), filterOptions.price_range.min)
-                  onPriceChange([numVal, priceRange[1]])
-                }}
-                className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
-                placeholder={`${filterOptions.price_range.min}`}
-              />
-              <span className="text-muted-foreground text-sm whitespace-nowrap">-</span>
-              <input
-                type="text"
-                inputMode="numeric"
-                value={priceRange[1]}
-                onChange={(e) => {
-                  const val = e.target.value.replace(/\D/g, "")
-                  const numVal = val === "" ? filterOptions.price_range.max : Math.min(Number(val), filterOptions.price_range.max)
-                  onPriceChange([priceRange[0], numVal])
-                }}
-                className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
-                placeholder={`${filterOptions.price_range.max}`}
-              />
-            </div>
-            <div className="text-xs text-muted-foreground">
-              ₽ {priceRange[0]} - ₽ {priceRange[1]}
-            </div>
-          </div>
         )}
       </div>
 
