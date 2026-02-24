@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Phone, Mail, MapPin } from "lucide-react"
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react"
 
 const footerLinks = {
   catalog: [
@@ -46,9 +46,13 @@ export function SiteFooter() {
                 <Phone className="h-4 w-4 shrink-0" />
                 +7 (905) 205-09-00
               </a>
-              <a href="mailto:info@cersanit-shop.ru" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
+              <a href="mailto:novorom@mail.ru" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
                 <Mail className="h-4 w-4 shrink-0" />
-                info@cersanit-shop.ru
+                novorom@mail.ru
+              </a>
+              <a href="https://t.me/flyroman" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
+                <MessageCircle className="h-4 w-4 shrink-0" />
+                @flyroman
               </a>
               <span className="flex items-center gap-2 text-background/70">
                 <MapPin className="h-4 w-4 shrink-0" />
