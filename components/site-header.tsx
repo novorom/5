@@ -12,7 +12,7 @@ const navLinks = [
   { href: "/collections", label: "Коллекции" },
   { href: "/delivery", label: "Доставка" },
   { href: "/about", label: "О компании" },
-  { href: "#", label: "Контакты" },
+  { href: "/contacts", label: "Контакты" },
 ]
 
 export function SiteHeader() {
