@@ -5186,5 +5186,275 @@ export const products: Product[] = [
     rating: 4.9,
     reviews_count: 218,
     rooms: ["Ванная комната", "Гостиная", "Кухня", "Коридор", "Балкон"]
+  },
+  {
+    id: "A16523",
+    sku: "16523",
+    name: "Плитка керамическая",
+    slug: "a16523",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A16427",
+    sku: "16427",
+    name: "Плитка керамическая",
+    slug: "a16427",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A16429",
+    sku: "16429",
+    name: "Плитка керамическая",
+    slug: "a16429",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A16431",
+    sku: "16431",
+    name: "Плитка керамическая",
+    slug: "a16431",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A16783",
+    sku: "16783",
+    name: "Плитка керамическая",
+    slug: "a16783",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A16785",
+    sku: "16785",
+    name: "Плитка керамическая",
+    slug: "a16785",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17129",
+    sku: "17129",
+    name: "Плитка керамическая",
+    slug: "a17129",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17130",
+    sku: "17130",
+    name: "Плитка керамическая",
+    slug: "a17130",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17131",
+    sku: "17131",
+    name: "Плитка керамическая",
+    slug: "a17131",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "AM4R092",
+    sku: "AM4R092",
+    name: "Плитка керамическая",
+    slug: "am4r092",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "FS4R452",
+    sku: "FS4R452",
+    name: "Плитка керамическая",
+    slug: "fs4r452",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "LO4R452",
+    sku: "LO4R452",
+    name: "Плитка керамическая",
+    slug: "lo4r452",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "RSL051",
+    sku: "RSL051",
+    name: "Плитка керамическая",
+    slug: "rsl051",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "RSL231",
+    sku: "RSL231",
+    name: "Плитка керамическая",
+    slug: "rsl231",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17418",
+    sku: "17418",
+    name: "Плитка керамическая",
+    slug: "a17418",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17419",
+    sku: "17419",
+    name: "Плитка керамическая",
+    slug: "a17419",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17420",
+    sku: "17420",
+    name: "Плитка керамическая",
+    slug: "a17420",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17421",
+    sku: "17421",
+    name: "Плитка керамическая",
+    slug: "a17421",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17422",
+    sku: "17422",
+    name: "Плитка керамическая",
+    slug: "a17422",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17423",
+    sku: "17423",
+    name: "Плитка керамическая",
+    slug: "a17423",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17424",
+    sku: "17424",
+    name: "Плитка керамическая",
+    slug: "a17424",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17425",
+    sku: "17425",
+    name: "Плитка керамическая",
+    slug: "a17425",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17426",
+    sku: "17426",
+    name: "Плитка керамическая",
+    slug: "a17426",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17427",
+    sku: "17427",
+    name: "Плитка керамическая",
+    slug: "a17427",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A16775",
+    sku: "16775",
+    name: "Плитка керамическая",
+    slug: "a16775",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A16777",
+    sku: "16777",
+    name: "Плитка керамическая",
+    slug: "a16777",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A16779",
+    sku: "16779",
+    name: "Плитка керамическая",
+    slug: "a16779",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17950",
+    sku: "17950",
+    name: "Плитка керамическая",
+    slug: "a17950",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "A17952",
+    sku: "17952",
+    name: "Плитка керамическая",
+    slug: "a17952",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
+  },
+  {
+    id: "EFF-WGA011",
+    sku: "EFF-WGA011",
+    name: "Плитка керамическая",
+    slug: "eff-wga011",
+    collection: "Other",
+    category: "Tiles",
+    price_retail: 0
   }
 ];

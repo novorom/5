@@ -1,22 +1,60 @@
 import csv
 import json
 import re
+import glob
+import os
+
+# Find full_products.csv using glob
+csv_file = None
+for pattern in ['full_products.csv', '*/full_products.csv', '../*/full_products.csv']:
+    matches = glob.glob(pattern)
+    if matches:
+        csv_file = matches[0]
+        break
+
+if not csv_file:
+    print(f"[v0] ERROR: Cannot find full_products.csv")
+    print(f"[v0] Current dir: {os.getcwd()}")
+    exit(1)
+
+print(f"[v0] Using CSV: {csv_file}")
+
+# Find products-data.ts
+products_file = None
+for pattern in ['products-data.ts', '../lib/products-data.ts', '../../lib/products-data.ts', '*/lib/products-data.ts']:
+    if os.path.exists(pattern):
+        products_file = pattern
+        break
+
+if not products_file:
+    print(f"[v0] ERROR: Cannot find products-data.ts")
+    exit(1)
+
+print(f"[v0] Using products file: {products_file}")
 
 # Read full_products.csv
 csv_products = {}
-with open('full_products.csv', 'r', encoding='utf-8') as f:
-    reader = csv.DictReader(f)
-    for row in reader:
-        article = row.get('Артикул', '').strip()
-        if article:
-            csv_products[article] = row
+try:
+    with open(csv_file, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f, delimiter='\t')
+        for row in reader:
+            article = row.get('Артикул', '').strip()
+            if article:
+                csv_products[article] = row
+except Exception as e:
+    print(f"[v0] Error reading CSV: {e}")
+    exit(1)
 
 # Read products-data.ts and extract all existing IDs
 catalog_ids = set()
-with open('../lib/products-data.ts', 'r', encoding='utf-8') as f:
-    content = f.read()
-    matches = re.findall(r'id: "([^"]+)"', content)
-    catalog_ids = set(matches)
+try:
+    with open(products_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+        matches = re.findall(r'id: "([^"]+)"', content)
+        catalog_ids = set(matches)
+except Exception as e:
+    print(f"[v0] Error reading products-data.ts: {e}")
+    exit(1)
 
 # Find missing articles
 missing = sorted(set(csv_products.keys()) - catalog_ids)
@@ -52,11 +90,12 @@ for article in missing:
     ts_output.append(ts_obj)
 
 # Save to file
-with open('missing_products.ts', 'w', encoding='utf-8') as f:
+output_file = 'missing_products.ts'
+with open(output_file, 'w', encoding='utf-8') as f:
     f.write(',\n'.join(ts_output))
 
 print(f"[v0] Generated TypeScript snippets for {len(missing)} products")
-print("[v0] Saved to missing_products.ts")
+print(f"[v0] Saved to {output_file}")
 
 # Also save missing articles list
 print("\n[v0] Missing articles:")
