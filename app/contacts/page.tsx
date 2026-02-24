@@ -24,19 +24,26 @@ export default function ContactsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    console.log('[v0] Form submitted with data:', formData)
+    
     try {
+      console.log('[v0] Sending POST to /api/contact')
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
 
+      console.log('[v0] Response status:', response.status)
+      
       if (!response.ok) {
+        const errorText = await response.text()
+        console.error('[v0] Response error:', errorText)
         throw new Error('Failed to send message')
       }
 
       const data = await response.json()
-      console.log('Message sent:', data)
+      console.log('[v0] Message sent successfully:', data)
       
       setSubmitted(true)
       setFormData({ name: '', email: '', phone: '', message: '' })
@@ -45,7 +52,7 @@ export default function ContactsPage() {
         setSubmitted(false)
       }, 5000)
     } catch (error) {
-      console.error('Error sending message:', error)
+      console.error('[v0] Error sending message:', error)
       alert('Ошибка при отправке сообщения. Пожалуйста, попробуйте позже.')
     }
   }
