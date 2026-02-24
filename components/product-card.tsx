@@ -31,6 +31,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           className="object-contain p-3 transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           priority={priority}
+          loading={priority ? "eager" : "lazy"}
         />
 
         {/* Badges */}

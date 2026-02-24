@@ -281,7 +281,7 @@ function CatalogContent() {
                 }`}
               >
                 {filteredProducts.map((product, index) => (
-                  <ProductCard key={`${product.id}-${index}`} product={product} />
+                  <ProductCard key={`${product.id}-${index}`} product={product} priority={index < 4} />
                 ))}
               </div>
             ) : (
