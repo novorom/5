@@ -85,7 +85,7 @@ export function SiteHeader() {
             <button
               onClick={handleSearch}
               className="absolute right-2.5 hover:opacity-70 transition-opacity"
-              aria-label="Искать"
+              aria-label="Search"
             >
               <Search className="h-4 w-4 text-muted-foreground" />
             </button>
@@ -93,15 +93,15 @@ export function SiteHeader() {
           <button
             onClick={() => setSearchOpen(!searchOpen)}
             className="lg:hidden p-2 rounded-lg hover:bg-accent transition-colors"
-            aria-label="Поиск"
+            aria-label="Search"
           >
             <Search className="h-5 w-5 text-foreground/70" />
           </button>
 
-          <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Избранное">
+          <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Favourites">
             <Heart className="h-5 w-5 text-foreground/70" />
           </button>
-          <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Корзина">
+          <button className="p-2 rounded-lg hover:bg-accent transition-colors relative" aria-label="Cart">
             <ShoppingCart className="h-5 w-5 text-foreground/70" />
             <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
               0
@@ -112,7 +112,7 @@ export function SiteHeader() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg hover:bg-accent transition-colors"
-            aria-label="Меню"
+            aria-label="Menu"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5 text-foreground/70" />
