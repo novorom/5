@@ -80,11 +80,16 @@ export function CatalogFilters({
                 type="number"
                 min={filterOptions.price_range.min}
                 max={filterOptions.price_range.max}
-                value={priceRange[0] || ""}
+                value={priceRange[0] === undefined ? "" : priceRange[0]}
                 onChange={(e) => {
-                  const val = e.target.value ? Number(e.target.value) : filterOptions.price_range.min
-                  if (!isNaN(val) && val >= filterOptions.price_range.min) {
-                    onPriceChange([val, priceRange[1]])
+                  const newVal = e.target.value === "" ? undefined : Number(e.target.value)
+                  if (newVal === undefined || (!isNaN(newVal) && newVal >= filterOptions.price_range.min)) {
+                    onPriceChange([newVal ?? filterOptions.price_range.min, priceRange[1]])
+                  }
+                }}
+                onBlur={(e) => {
+                  if (e.target.value === "") {
+                    onPriceChange([filterOptions.price_range.min, priceRange[1]])
                   }
                 }}
                 className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
@@ -95,11 +100,16 @@ export function CatalogFilters({
                 type="number"
                 min={filterOptions.price_range.min}
                 max={filterOptions.price_range.max}
-                value={priceRange[1] || ""}
+                value={priceRange[1] === undefined ? "" : priceRange[1]}
                 onChange={(e) => {
-                  const val = e.target.value ? Number(e.target.value) : filterOptions.price_range.max
-                  if (!isNaN(val) && val <= filterOptions.price_range.max) {
-                    onPriceChange([priceRange[0], val])
+                  const newVal = e.target.value === "" ? undefined : Number(e.target.value)
+                  if (newVal === undefined || (!isNaN(newVal) && newVal <= filterOptions.price_range.max)) {
+                    onPriceChange([priceRange[0], newVal ?? filterOptions.price_range.max])
+                  }
+                }}
+                onBlur={(e) => {
+                  if (e.target.value === "") {
+                    onPriceChange([priceRange[0], filterOptions.price_range.max])
                   }
                 }}
                 className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
