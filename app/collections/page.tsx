@@ -265,7 +265,7 @@ export default function CollectionsPage() {
             {selectedDimensions.map((d) => (
               <button
                 key={d}
-                onClick={() => toggleFilter(selectedDesigns, setSelectedDesigns)(d)}
+                onClick={() => toggleFilter(selectedDimensions, setSelectedDimensions)(d)}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors"
               >
                 {d}
