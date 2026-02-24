@@ -24,6 +24,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
           fill
           className="object-contain p-4"
           priority
+          loading="eager"
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
