@@ -80,34 +80,34 @@ export function CatalogFilters({
                 type="number"
                 min={filterOptions.price_range.min}
                 max={filterOptions.price_range.max}
-                value={priceRange[0]}
+                value={priceRange[0] || ""}
                 onChange={(e) => {
-                  const val = Number(e.target.value)
-                  if (!isNaN(val)) {
+                  const val = e.target.value ? Number(e.target.value) : filterOptions.price_range.min
+                  if (!isNaN(val) && val >= filterOptions.price_range.min) {
                     onPriceChange([val, priceRange[1]])
                   }
                 }}
                 className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
-                placeholder={`от ${filterOptions.price_range.min}`}
+                placeholder={`${filterOptions.price_range.min}`}
               />
               <span className="text-muted-foreground text-sm whitespace-nowrap">-</span>
               <input
                 type="number"
                 min={filterOptions.price_range.min}
                 max={filterOptions.price_range.max}
-                value={priceRange[1]}
+                value={priceRange[1] || ""}
                 onChange={(e) => {
-                  const val = Number(e.target.value)
-                  if (!isNaN(val)) {
+                  const val = e.target.value ? Number(e.target.value) : filterOptions.price_range.max
+                  if (!isNaN(val) && val <= filterOptions.price_range.max) {
                     onPriceChange([priceRange[0], val])
                   }
                 }}
                 className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
-                placeholder={`до ${filterOptions.price_range.max}`}
+                placeholder={`${filterOptions.price_range.max}`}
               />
             </div>
             <div className="text-xs text-muted-foreground">
-              ₽ {priceRange[0]} - ₽ {priceRange[1]}
+              ₽ {priceRange[0] || filterOptions.price_range.min} - ₽ {priceRange[1] || filterOptions.price_range.max}
             </div>
           </div>
         )}
