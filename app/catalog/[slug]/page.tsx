@@ -32,7 +32,7 @@ export default function ProductPage() {
     .filter((p) => p.collection === product.collection && p.id !== product.id)
     .slice(0, 4)
 
-  const totalStock = product.stock_yanino + product.stock_factory
+  const totalStock = (product.stock_yanino ?? 0) + (product.stock_factory ?? 0)
   const hasDiscount = product.price_official && product.price_official > product.price_retail
 
   const tabs: { id: TabId; label: string }[] = [
