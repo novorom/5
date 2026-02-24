@@ -66,7 +66,7 @@ export function CatalogFilters({
           onClick={() => toggleSection("price")}
           className="flex items-center justify-between w-full py-2"
         >
-          <span className="text-sm font-medium text-foreground">Цена, {"₽/м²"}</span>
+          <span className="text-sm font-medium text-foreground">Цена, ₽</span>
           <ChevronDown
             className={`h-4 w-4 text-muted-foreground transition-transform ${
               openSections.includes("price") ? "rotate-180" : ""
