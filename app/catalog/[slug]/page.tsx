@@ -14,7 +14,7 @@ import {
   Plus,
   MapPin,
 } from "lucide-react"
-import { products } from "@/lib/mock-data"
+import { products } from "@/lib/products-data"
 import { ProductGallery } from "@/components/product-gallery"
 import { ProductCard } from "@/components/product-card"
 
