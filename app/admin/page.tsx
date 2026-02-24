@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { AlertCircle, Upload, Check, X, Download } from "lucide-react"
 import type { Product } from "@/lib/products-data"
 import {
@@ -17,7 +17,8 @@ interface ProcessingResult {
   result: ExcelProcessResult
 }
 
-export default function AdminPage() {
+// Wrapper component that uses the context
+function AdminContent() {
   const { products: contextProducts, updateProducts } = useProducts()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [passcode, setPasscode] = useState("")
@@ -26,10 +27,18 @@ export default function AdminPage() {
   const [processingResults, setProcessingResults] = useState<ProcessingResult[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
   const [successMessage, setSuccessMessage] = useState("")
+  const [processingResults, setProcessingResults] = useState<ProcessingResult[]>([])
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [successMessage, setSuccessMessage] = useState("")
 
   const yaninoFileRef = useRef<HTMLInputElement>(null)
   const zavodFileRef = useRef<HTMLInputElement>(null)
   const priceFileRef = useRef<HTMLInputElement>(null)
+
+  // Initialize products on mount
+  useEffect(() => {
+    setProducts(contextProducts)
+  }, [contextProducts])
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -388,4 +397,8 @@ export default function AdminPage() {
       </div>
     </div>
   )
+}
+
+export default function AdminPage() {
+  return <AdminContent />
 }
