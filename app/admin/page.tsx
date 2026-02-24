@@ -3,7 +3,6 @@
 import { useState, useRef } from "react"
 import { AlertCircle, Upload, Check, X, Download } from "lucide-react"
 import type { Product } from "@/lib/products-data"
-import { products as initialProducts } from "@/lib/products-data"
 import {
   processYaninoFile,
   processZavodFile,
@@ -11,6 +10,7 @@ import {
   type ExcelProcessResult,
 } from "@/lib/excel-processor"
 import { verifyAdminAccess } from "@/lib/admin-auth"
+import { useProducts } from "@/lib/products-context"
 
 interface ProcessingResult {
   fileType: string
@@ -18,10 +18,11 @@ interface ProcessingResult {
 }
 
 export default function AdminPage() {
+  const { products: contextProducts, updateProducts } = useProducts()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [passcode, setPasscode] = useState("")
   const [authError, setAuthError] = useState("")
-  const [products, setProducts] = useState<Product[]>(initialProducts)
+  const [products, setProducts] = useState<Product[]>(contextProducts)
   const [processingResults, setProcessingResults] = useState<ProcessingResult[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
   const [successMessage, setSuccessMessage] = useState("")
@@ -46,8 +47,14 @@ export default function AdminPage() {
     setIsAuthenticated(false)
     setPasscode("")
     setProcessingResults([])
-    setProducts(initialProducts)
+    setProducts(contextProducts)
     setSuccessMessage("")
+  }
+
+  // Sync products back to context when state changes after file processing
+  const saveUpdatedProducts = (updatedProducts: Product[]) => {
+    setProducts(updatedProducts)
+    updateProducts(updatedProducts)
   }
 
   const handleFileUpload = async (
@@ -72,6 +79,7 @@ export default function AdminPage() {
       }
 
       setProducts(result.updatedProducts)
+      saveUpdatedProducts(result.updatedProducts)
       setProcessingResults([
         ...processingResults,
         {
@@ -98,9 +106,9 @@ export default function AdminPage() {
   }
 
   const handleSaveUpdates = () => {
-    // Save to localStorage for session persistence
-    localStorage.setItem("admin-products", JSON.stringify(products))
-    setSuccessMessage("✓ Данные сохранены в браузер (для сеанса)")
+    // Save to context which handles localStorage persistence
+    updateProducts(products)
+    setSuccessMessage("✓ Данные сохранены")
   }
 
   const handleExportData = () => {
@@ -116,9 +124,8 @@ export default function AdminPage() {
 
   const handleResetData = () => {
     if (confirm("Вы уверены? Все изменения будут отменены.")) {
-      setProducts(initialProducts)
+      setProducts(contextProducts)
       setProcessingResults([])
-      localStorage.removeItem("admin-products")
       setSuccessMessage("✓ Данные сброшены")
     }
   }
