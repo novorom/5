@@ -34,19 +34,12 @@ function CatalogContent() {
   const initialFilters = useMemo((): Record<string, string[]> => {
     const filters: Record<string, string[]> = {}
     
-    if (collectionSlug) {
-      const found = collections.find((c) => c.slug === collectionSlug)
-      if (found) {
-        filters.collections = [found.name]
-      }
-    }
-    
     if (productType) {
       filters.product_types = [productType]
     }
     
     return filters
-  }, [collectionSlug, productType])
+  }, [productType])
 
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>(initialFilters)
   const [priceRange, setPriceRange] = useState<[number, number]>([
@@ -58,13 +51,6 @@ function CatalogContent() {
   useEffect(() => {
     const filters: Record<string, string[]> = {}
     
-    if (collectionSlug) {
-      const found = collections.find((c) => c.slug === collectionSlug)
-      if (found) {
-        filters.collections = [found.name]
-      }
-    }
-    
     if (productType) {
       filters.product_types = [productType]
     }
@@ -72,7 +58,7 @@ function CatalogContent() {
     if (Object.keys(filters).length > 0) {
       setActiveFilters(filters)
     }
-  }, [collectionSlug, productType])
+  }, [productType])
   const [sort, setSort] = useState("popular")
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [gridCols, setGridCols] = useState<3 | 4>(3)
@@ -111,12 +97,12 @@ function CatalogContent() {
       result = result.filter((p) => {
         const fieldMap: Record<string, string> = {
           product_types: "product_type",
-          collections: "collection",
           colors: "color",
           formats: "format",
-          surfaces: "surface",
-          applications: "application",
-          materials: "material_type",
+          dimensions: "format",
+          designs: "collection",
+          textures: "surface",
+          surface_types: "surface",
         }
         const field = fieldMap[key]
         if (!field) return true
