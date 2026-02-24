@@ -100,7 +100,16 @@ function CatalogContent() {
         const field = fieldMap[key]
         if (!field) return true
         const record = p as unknown as Record<string, unknown>
-        return values.includes(record[field] as string)
+        const productValue = record[field] as string
+        
+        // Special handling for surface_types: "полированная (глянец)" matches both "глянцевая" and "полированная"
+        if (key === "surface_types" && values.includes("полированная (глянец)")) {
+          if (productValue === "глянцевая" || productValue === "полированная") {
+            return true
+          }
+        }
+        
+        return values.includes(productValue)
       })
     })
 

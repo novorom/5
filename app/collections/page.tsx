@@ -111,7 +111,17 @@ export default function CollectionsPage() {
       result = result.filter((c) => c.colors.some((col) => selectedColors.includes(col)))
     }
     if (selectedSurfaceTypes.length > 0) {
-      result = result.filter((c) => c.surfaces.some((s) => selectedSurfaceTypes.includes(s)))
+      result = result.filter((c) => 
+        c.surfaces.some((s) => {
+          // Special handling: "полированная (глянец)" matches both "глянцевая" and "полированная"
+          if (selectedSurfaceTypes.includes("полированная (глянец)")) {
+            if (s === "глянцевая" || s === "полированная") {
+              return true
+            }
+          }
+          return selectedSurfaceTypes.includes(s)
+        })
+      )
     }
 
     switch (sortBy) {

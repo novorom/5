@@ -53,8 +53,7 @@ export const filterOptions = {
   ],
   surface_types: [
     "матовая",
-    "глянцевая",
-    "полированная",
+    "полированная (глянец)",
     "сатиновая",
   ],
   surfaces: [
