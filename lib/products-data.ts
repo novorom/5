@@ -662,7 +662,7 @@ export const products: Product[] = [
     rooms: ["Ванная комната", "Спальня"]
   },
   {
-    id: "KTL051",
+    id: "KTL051-2",
     sku: "KTL051D-60",
     name: "Настенная плитка Calacatta белый 29,8x59,8",
     slug: "nastennaya-plitka-calacatta-belyy-30x60",
@@ -2031,7 +2031,7 @@ export const products: Product[] = [
     rooms: ["Кухня", "Терраса", "Балкон"]
   },
   {
-    id: "NW4M012",
+    id: "NW4M012-2",
     sku: "16694",
     name: "Глаз. керамогранит Northwood бежевый рельеф 18,5x59,8",
     slug: "keramogranit-northwood-beige",
