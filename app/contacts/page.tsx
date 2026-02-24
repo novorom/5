@@ -78,6 +78,11 @@ ${formData.message}
 
   const socialLinks = [
     {
+      icon: '🏪',
+      name: 'Avito',
+      url: 'https://www.avito.ru/brands/i1860592?src=sharing',
+    },
+    {
       icon: '📱',
       name: 'VK (ВКонтакте)',
       url: 'https://vk.com/tilebox',
@@ -146,17 +151,17 @@ ${formData.message}
             <h2 className="text-2xl font-bold text-foreground mb-8">
               Найдите нас в социальных сетях
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-4 p-4 rounded-xl border border-border hover:border-primary hover:bg-primary/5 transition-all duration-300"
+                  className="group flex flex-col items-center gap-3 p-4 rounded-xl border border-border hover:border-primary hover:bg-primary/5 transition-all duration-300"
                 >
                   <div className="text-3xl">{social.icon}</div>
-                  <span className="text-foreground font-medium group-hover:text-primary transition-colors">
+                  <span className="text-foreground font-medium group-hover:text-primary transition-colors text-center text-sm">
                     {social.name}
                   </span>
                 </a>
