@@ -43,9 +43,9 @@ export function SiteHeader() {
         <div className="mx-auto max-w-7xl px-4 flex items-center justify-between h-9 text-sm">
           <span className="hidden sm:block">Официальный дилер Cersanit в России</span>
           <div className="flex items-center gap-4">
-            <a href="tel:+78123091234" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+            <a href="tel:+79052050900" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
               <Phone className="h-3.5 w-3.5" />
-              <span>+7 (812) 309-12-34</span>
+              <span>+7 (905) 205-09-00</span>
             </a>
             <span className="hidden sm:block text-primary-foreground/70">Пн-Пт 9:00-18:00</span>
           </div>

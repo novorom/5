@@ -42,9 +42,9 @@ export function SiteFooter() {
               Официальный дилер керамической плитки Cersanit в России. Более 750 наименований в наличии.
             </p>
             <div className="flex flex-col gap-2 text-sm">
-              <a href="tel:+78123091234" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
+              <a href="tel:+79052050900" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
                 <Phone className="h-4 w-4 shrink-0" />
-                +7 (812) 309-12-34
+                +7 (905) 205-09-00
               </a>
               <a href="mailto:info@cersanit-shop.ru" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
                 <Mail className="h-4 w-4 shrink-0" />
