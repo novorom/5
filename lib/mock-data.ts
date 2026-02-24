@@ -146,36 +146,6 @@ export const collections: Collection[] = [
   { id: 80, name: "Colorwood", slug: "colorwood", image: "https://pvi.cersanit.ru/upload/uf/img/colorwood.jpg", product_count: 1 },
   { id: 81, name: "Concretehouse", slug: "concretehouse", image: "https://pvi.cersanit.ru/upload/uf/img/concretehouse.jpg", product_count: 1 },
 ]
-
-export const products: Product[] = [
-  // ===== CALACATTA =====
-  {
-    id: 1,
-    sku: "KT2L051",
-    name: "Calacatta узор белый 29.8x59.8",
-    slug: "calacatta-uzor-belyj-298x598",
-    brand: "Cersanit",
-    collection: "Calacatta",
-    product_type: "Керамическая плитка",
-    format: "29.8x59.8",
-    surface: "Глянцевая",
-    color: "Белый",
-    material_type: "Керамика",
-    application: "Стена",
-    rooms: ["Ванная комната", "Гостиная", "Спальня"],
-    thickness: "9 мм",
-    pieces_per_box: 10,
-    sqm_per_box: 1.78,
-    country: "Россия",
-    price_retail: 1490,
-    price_official: null,
-    currency: "RUB",
-    stock_yanino: 320,
-    stock_factory: 1200,
-    description: "Настенная вставка из коллекции Calacatta с изящным узором на белом фоне. Воссоздает утонченную красоту итальянского мрамора Calacatta с характерными серыми и золотистыми прожилками. Идеально подходит для создания элегантного интерьера ванной комнаты, гостиной или спальни.",
-    images: [
-      "https://pvi.cersanit.ru/upload/uf/d5d/KT2L051.jpg",
-      "https://pvi.cersanit.ru/upload/uf/b00/Int_Calacatta_2.jpg",
       "https://pvi.cersanit.ru/upload/uf/020/Int_Calacatta_3.jpg",
       "https://pvi.cersanit.ru/upload/uf/ae8/Calacatta_large_1.jpg",
     ],
@@ -699,7 +669,7 @@ export const products: Product[] = [
     currency: "RUB",
     stock_yanino: 200,
     stock_factory: 650,
-    description: "Керамогранит с рустикальной текстурой дерева. Выраженный рисунок с сучками и природными дефектами создает живой и аутентичный образ натурального пола.",
+    description: "К��рамогранит с рустикальной текстурой дерева. Выраженный рисунок с сучками и природными дефектами создает живой и аутентичный образ натурального пола.",
     images: [
       "https://pvi.cersanit.ru/upload/uf/039/15983_1.jpg",
       "https://pvi.cersanit.ru/upload/uf/581/Interior_WR4T013_1.jpg",
