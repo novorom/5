@@ -77,33 +77,33 @@ export function CatalogFilters({
           <div className="mt-2 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <input
-                type="number"
-                min={filterOptions.price_range.min}
-                max={filterOptions.price_range.max}
+                type="text"
+                inputMode="numeric"
                 value={priceRange[0]}
                 onChange={(e) => {
-                  const val = e.target.value === "" ? 0 : Number(e.target.value)
-                  onPriceChange([val, priceRange[1]])
+                  const val = e.target.value.replace(/\D/g, "")
+                  const numVal = val === "" ? filterOptions.price_range.min : Math.max(Number(val), filterOptions.price_range.min)
+                  onPriceChange([numVal, priceRange[1]])
                 }}
                 className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
                 placeholder={`${filterOptions.price_range.min}`}
               />
               <span className="text-muted-foreground text-sm whitespace-nowrap">-</span>
               <input
-                type="number"
-                min={filterOptions.price_range.min}
-                max={filterOptions.price_range.max}
+                type="text"
+                inputMode="numeric"
                 value={priceRange[1]}
                 onChange={(e) => {
-                  const val = e.target.value === "" ? 0 : Number(e.target.value)
-                  onPriceChange([priceRange[0], val])
+                  const val = e.target.value.replace(/\D/g, "")
+                  const numVal = val === "" ? filterOptions.price_range.max : Math.min(Number(val), filterOptions.price_range.max)
+                  onPriceChange([priceRange[0], numVal])
                 }}
                 className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
                 placeholder={`${filterOptions.price_range.max}`}
               />
             </div>
             <div className="text-xs text-muted-foreground">
-              {priceRange[0] > 0 ? `₽ ${priceRange[0]}` : "от 0"} - {priceRange[1] > 0 ? `₽ ${priceRange[1]}` : "до 0"}
+              ₽ {priceRange[0]} - ₽ {priceRange[1]}
             </div>
           </div>
         )}

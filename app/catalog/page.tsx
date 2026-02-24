@@ -111,11 +111,9 @@ function CatalogContent() {
       })
     })
 
-    // Apply price filter (use default range if values are 0)
-    const minPrice = priceRange[0] > 0 ? priceRange[0] : filterOptions.price_range.min
-    const maxPrice = priceRange[1] > 0 ? priceRange[1] : filterOptions.price_range.max
+    // Apply price filter
     result = result.filter(
-      (p) => p.price_retail >= minPrice && p.price_retail <= maxPrice
+      (p) => p.price_retail >= priceRange[0] && p.price_retail <= priceRange[1]
     )
 
     // Sort
