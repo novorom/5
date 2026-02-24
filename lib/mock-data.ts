@@ -1,3 +1,5 @@
+import { products } from "./products-data"
+
 export interface Product {
   id: number
   sku: string
@@ -48,11 +50,17 @@ export interface Collection {
   product_count: number
 }
 
+// Calculate actual product counts by type
+const plitkaCount = products.filter(p => p.product_type === "Плитка").length
+const keramoglanitCount = products.filter(p => p.product_type === "Керамогранит").length
+const mozaikaCount = products.filter(p => p.product_type === "Мозаика на сетке").length
+const stupenCount = products.filter(p => p.product_type === "Ступень").length
+
 export const categories: Category[] = [
-  { id: 1, name: "Плитка", slug: "keramicheskaya-plitka", image: "/images/categories/ceramic.jpg", count: 12 },
-  { id: 2, name: "Керамогранит", slug: "keramogranit", image: "/images/categories/porcelain.jpg", count: 24 },
-  { id: 3, name: "Мозаика на сетке", slug: "mozaika", image: "/images/categories/mosaic.jpg", count: 5 },
-  { id: 4, name: "Ступень", slug: "stupeni", image: "/images/categories/steps.jpg", count: 5 },
+  { id: 1, name: "Плитка", slug: "keramicheskaya-plitka", image: "/images/categories/ceramic.jpg", count: plitkaCount },
+  { id: 2, name: "Керамогранит", slug: "keramogranit", image: "/images/categories/porcelain.jpg", count: keramoglanitCount },
+  { id: 3, name: "Мозаика на сетке", slug: "mozaika", image: "/images/categories/mosaic.jpg", count: mozaikaCount },
+  { id: 4, name: "Ступень", slug: "stupeni", image: "/images/categories/steps.jpg", count: stupenCount },
 ]
 
 export const collections: Collection[] = [
