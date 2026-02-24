@@ -81,7 +81,7 @@ export default function ProductPage() {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Gallery */}
           <div className="lg:w-1/2">
-            <ProductGallery images={product.images} name={product.name} />
+            <ProductGallery images={product.images || []} name={product.name} />
           </div>
 
           {/* Product info */}
