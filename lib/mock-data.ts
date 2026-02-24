@@ -49,10 +49,10 @@ export interface Collection {
 }
 
 export const categories: Category[] = [
-  { id: 1, name: "Керамическая плитка", slug: "keramicheskaya-plitka", image: "/images/categories/ceramic.jpg", count: 12 },
+  { id: 1, name: "Плитка", slug: "keramicheskaya-plitka", image: "/images/categories/ceramic.jpg", count: 12 },
   { id: 2, name: "Керамогранит", slug: "keramogranit", image: "/images/categories/porcelain.jpg", count: 24 },
-  { id: 3, name: "Мозаика", slug: "mozaika", image: "/images/categories/mosaic.jpg", count: 5 },
-  { id: 4, name: "Ступени", slug: "stupeni", image: "/images/categories/steps.jpg", count: 5 },
+  { id: 3, name: "Мозаика на сетке", slug: "mozaika", image: "/images/categories/mosaic.jpg", count: 5 },
+  { id: 4, name: "Ступень", slug: "stupeni", image: "/images/categories/steps.jpg", count: 5 },
 ]
 
 export const collections: Collection[] = [
@@ -1213,7 +1213,7 @@ export const products: Product[] = [
     currency: "RUB",
     stock_yanino: 200,
     stock_factory: 700,
-    description: "Стеклянный спецэлемент из коллекции Effecta. Тонкая бежевая полоска для создания изящных линий на стене.",
+    description: "Стеклянный спецэлемент из коллекции Effecta. Тонкая бежева�� полоска для создания изящных линий на стене.",
     images: [
       "https://pvi.cersanit.ru/upload/uf/c45/Effecta_2.5x60_O-EFF-WGA011_decor_jpg.jpg",
       "https://pvi.cersanit.ru/upload/uf/8b9/INT_Effecta_2_1.jpg",
@@ -1428,7 +1428,7 @@ export const products: Product[] = [
     format: "29.7x59.8",
     surface: "Рельефная",
     color: "Бежевый",
-    material_type: "Керамогранит",
+    material_type: "Керамогран��т",
     application: "Пол",
     rooms: ["Гостиная", "Спальня", "Кухня", "Коридор"],
     thickness: "10 мм",
