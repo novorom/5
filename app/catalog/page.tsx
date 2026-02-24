@@ -94,7 +94,7 @@ function CatalogContent() {
           product_types: "product_type",
           colors: "color",
           dimensions: "format",
-          textures: "surface",
+          designs: "collection",
           surface_types: "surface",
         }
         const field = fieldMap[key]

@@ -14,7 +14,7 @@ const filterSections: FilterSection[] = [
   { label: "Тип плитки", key: "product_types", options: filterOptions.product_types },
   { label: "Цвет", key: "colors", options: filterOptions.colors },
   { label: "Размер", key: "dimensions", options: filterOptions.dimensions },
-  { label: "Фактура поверхности", key: "textures", options: filterOptions.textures },
+  { label: "Дизайн", key: "designs", options: filterOptions.designs },
   { label: "Тип поверхности", key: "surface_types", options: filterOptions.surface_types },
 ]
 

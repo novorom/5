@@ -21,7 +21,7 @@ const collectionsWithMeta = collections.map((c) => {
 const allTypes = [...new Set(collectionsWithMeta.flatMap((c) => c.types))].sort()
 const allColors = filterOptions.colors
 const allDimensions = filterOptions.dimensions
-const allTextures = filterOptions.textures
+const allDesigns = filterOptions.designs
 const allSurfaceTypes = filterOptions.surface_types
 
 /* ---------- Filter sidebar section ---------- */
@@ -90,7 +90,7 @@ export default function CollectionsPage() {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [selectedDimensions, setSelectedDimensions] = useState<string[]>([])
-  const [selectedTextures, setSelectedTextures] = useState<string[]>([])
+  const [selectedDesigns, setSelectedDesigns] = useState<string[]>([])
   const [selectedSurfaceTypes, setSelectedSurfaceTypes] = useState<string[]>([])
   const [sortBy, setSortBy] = useState<"popular" | "name-asc" | "name-desc">("popular")
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
@@ -99,7 +99,7 @@ export default function CollectionsPage() {
     setArr(arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value])
   }
 
-  const activeFilterCount = selectedTypes.length + selectedColors.length + selectedDimensions.length + selectedTextures.length + selectedSurfaceTypes.length
+  const activeFilterCount = selectedTypes.length + selectedColors.length + selectedDimensions.length + selectedDesigns.length + selectedSurfaceTypes.length
 
   const filtered = useMemo(() => {
     let result = [...collectionsWithMeta]
@@ -127,13 +127,13 @@ export default function CollectionsPage() {
     }
 
     return result
-  }, [selectedTypes, selectedColors, selectedSurfaceTypes, sortBy])
+  }, [selectedTypes, selectedColors, selectedDesigns, selectedSurfaceTypes, sortBy])
 
   const clearFilters = () => {
     setSelectedTypes([])
     setSelectedColors([])
     setSelectedDimensions([])
-    setSelectedTextures([])
+    setSelectedDesigns([])
     setSelectedSurfaceTypes([])
   }
 
@@ -159,10 +159,10 @@ export default function CollectionsPage() {
         onToggle={toggleFilter(selectedDimensions, setSelectedDimensions)}
       />
       <FilterSection
-        title="Фактура поверхности"
-        options={allTextures}
-        selected={selectedTextures}
-        onToggle={toggleFilter(selectedTextures, setSelectedTextures)}
+        title="Дизайн"
+        options={allDesigns}
+        selected={selectedDesigns}
+        onToggle={toggleFilter(selectedDesigns, setSelectedDesigns)}
       />
       <FilterSection
         title="Тип поверхности"
@@ -272,13 +272,13 @@ export default function CollectionsPage() {
                 <X className="h-3 w-3" />
               </button>
             ))}
-            {selectedTextures.map((t) => (
+            {selectedDesigns.map((d) => (
               <button
-                key={t}
-                onClick={() => toggleFilter(selectedTextures, setSelectedTextures)(t)}
+                key={d}
+                onClick={() => toggleFilter(selectedDesigns, setSelectedDesigns)(d)}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors"
               >
-                {t}
+                {d}
                 <X className="h-3 w-3" />
               </button>
             ))}
