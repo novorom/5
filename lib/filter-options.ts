@@ -1,3 +1,5 @@
+import { products } from "./products-data"
+
 export const filterOptions = {
   product_types: [
     "Плитка",
@@ -39,18 +41,7 @@ export const filterOptions = {
     "60x60",
     "60x120",
   ],
-  designs: [
-    "Однотонный",
-    "Паркет",
-    "Дерево",
-    "Камень",
-    "Абстракция",
-    "Геометрия",
-    "Цветочный",
-    "Этнический",
-    "Мрамор",
-    "Бетон",
-  ],
+  designs: [...new Set(products.map((p) => p.collection))].sort(),
   surface_types: [
     "матовая",
     "полированная (глянец)",
