@@ -74,22 +74,41 @@ export function CatalogFilters({
           />
         </button>
         {openSections.includes("price") && (
-          <div className="mt-2 flex items-center gap-2">
-            <input
-              type="number"
-              value={priceRange[0]}
-              onChange={(e) => onPriceChange([Number(e.target.value), priceRange[1]])}
-              className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
-              placeholder={`от ${filterOptions.price_range.min}`}
-            />
-            <span className="text-muted-foreground text-sm">-</span>
-            <input
-              type="number"
-              value={priceRange[1]}
-              onChange={(e) => onPriceChange([priceRange[0], Number(e.target.value)])}
-              className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
-              placeholder={`до ${filterOptions.price_range.max}`}
-            />
+          <div className="mt-2 flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                min={filterOptions.price_range.min}
+                max={filterOptions.price_range.max}
+                value={priceRange[0]}
+                onChange={(e) => {
+                  const val = Number(e.target.value)
+                  if (!isNaN(val)) {
+                    onPriceChange([val, priceRange[1]])
+                  }
+                }}
+                className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
+                placeholder={`от ${filterOptions.price_range.min}`}
+              />
+              <span className="text-muted-foreground text-sm whitespace-nowrap">-</span>
+              <input
+                type="number"
+                min={filterOptions.price_range.min}
+                max={filterOptions.price_range.max}
+                value={priceRange[1]}
+                onChange={(e) => {
+                  const val = Number(e.target.value)
+                  if (!isNaN(val)) {
+                    onPriceChange([priceRange[0], val])
+                  }
+                }}
+                className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
+                placeholder={`до ${filterOptions.price_range.max}`}
+              />
+            </div>
+            <div className="text-xs text-muted-foreground">
+              ₽ {priceRange[0]} - ₽ {priceRange[1]}
+            </div>
           </div>
         )}
       </div>

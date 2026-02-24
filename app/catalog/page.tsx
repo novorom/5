@@ -112,9 +112,11 @@ function CatalogContent() {
     })
 
     // Apply price filter
+    console.log(`[v0] Price range: ${priceRange[0]} - ${priceRange[1]}`)
     result = result.filter(
       (p) => p.price_retail >= priceRange[0] && p.price_retail <= priceRange[1]
     )
+    console.log(`[v0] After price filter: ${result.length} products`)
 
     // Sort
     switch (sort) {
