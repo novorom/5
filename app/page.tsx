@@ -7,6 +7,14 @@ import { ProductCard } from "@/components/product-card"
 
 export default function HomePage() {
   const popularProducts = products.filter((p) => p.is_bestseller).slice(0, 8)
+  
+  // Get first product image for each category
+  const categoryImages = {
+    "Плитка": products.find(p => p.product_type === "Плитка")?.main_image,
+    "Керамогранит": products.find(p => p.product_type === "Керамогранит")?.main_image,
+    "Мозаика на сетке": products.find(p => p.product_type === "Мозаика на сетке")?.main_image,
+    "Ступень": products.find(p => p.product_type === "Ступень")?.main_image,
+  }
 
   return (
     <div className="flex flex-col">
@@ -74,30 +82,35 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/catalog?product_type=${encodeURIComponent(category.name)}`}
-                className="group relative rounded-xl overflow-hidden aspect-[4/3] lg:aspect-[3/4]"
-              >
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 640px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
-                  <h3 className="text-base lg:text-lg font-semibold text-background text-balance">
-                    {category.name}
-                  </h3>
-                  <span className="text-sm text-background/60 mt-0.5 block">
-                    {category.count} товаров
-                  </span>
-                </div>
-              </Link>
-            ))}
+            {categories.map((category) => {
+              const imageUrl = categoryImages[category.name as keyof typeof categoryImages]
+              return (
+                <Link
+                  key={category.id}
+                  href={`/catalog?product_type=${encodeURIComponent(category.name)}`}
+                  className="group relative rounded-xl overflow-hidden aspect-[4/3] lg:aspect-[3/4]"
+                >
+                  {imageUrl && (
+                    <Image
+                      src={imageUrl}
+                      alt={category.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 50vw, 25vw"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
+                    <h3 className="text-base lg:text-lg font-semibold text-background text-balance">
+                      {category.name}
+                    </h3>
+                    <span className="text-sm text-background/60 mt-0.5 block">
+                      {category.count} товаров
+                    </span>
+                  </div>
+                </Link>
+              )
+            })}
           </div>
           <Link
             href="/catalog"
@@ -162,14 +175,16 @@ export default function HomePage() {
                 href={`/catalog?collection=${collection.slug}`}
                 className="group snap-start shrink-0 w-56 lg:w-64 flex flex-col rounded-xl border border-border overflow-hidden bg-card hover:shadow-lg transition-all duration-300"
               >
-                <div className="relative aspect-square overflow-hidden">
-                  <Image
-                    src={collection.image}
-                    alt={collection.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="256px"
-                  />
+                <div className="relative aspect-square overflow-hidden bg-muted">
+                  {collection.image && (
+                    <Image
+                      src={collection.image}
+                      alt={collection.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="256px"
+                    />
+                  )}
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
