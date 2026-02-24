@@ -1,10 +1,28 @@
 import csv
 import re
 import json
+import glob
+import os
+
+# Find CSV file - search in current dir and subdirs
+csv_file = None
+for pattern in ['products.csv', '*/products.csv', '../scripts/products.csv']:
+    matches = glob.glob(pattern)
+    if matches:
+        csv_file = matches[0]
+        break
+
+if not csv_file:
+    print("[v0] ERROR: Cannot find products.csv")
+    print(f"[v0] Current directory: {os.getcwd()}")
+    print(f"[v0] Files: {os.listdir('.')[:10]}")
+    exit(1)
+
+print(f"[v0] Found CSV at: {csv_file}")
 
 # Read CSV file
 csv_articles = {}
-with open('products.csv', 'r', encoding='utf-8') as f:
+with open(csv_file, 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
     for row in reader:
         article = row.get('Артикул', '').strip()
@@ -13,9 +31,20 @@ with open('products.csv', 'r', encoding='utf-8') as f:
 
 print(f"[v0] CSV contains {len(csv_articles)} unique articles")
 
+# Find products-data.ts
+products_file = None
+for pattern in ['../lib/products-data.ts', '../../lib/products-data.ts', 'lib/products-data.ts']:
+    if os.path.exists(pattern):
+        products_file = pattern
+        break
+
+if not products_file:
+    print("[v0] ERROR: Cannot find products-data.ts")
+    exit(1)
+
 # Read products-data.ts and extract all IDs
 catalog_ids = set()
-with open('../lib/products-data.ts', 'r', encoding='utf-8') as f:
+with open(products_file, 'r', encoding='utf-8') as f:
     content = f.read()
     matches = re.findall(r'id: "([^"]+)"', content)
     catalog_ids = set(matches)
