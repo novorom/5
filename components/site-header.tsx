@@ -3,7 +3,7 @@
 import { useState, KeyboardEvent } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Search, Heart, ShoppingCart, Menu, X, Phone } from "lucide-react"
+import { Search, Heart, ShoppingCart, Menu, X, Phone, MessageCircle } from "lucide-react"
 import { Logo } from "./logo"
 import { useCart } from "@/lib/cart-context"
 
@@ -40,14 +40,18 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 bg-background border-b border-border">
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-7xl px-4 flex items-center justify-between h-9 text-sm">
+        <div className="mx-auto max-w-7xl px-4 flex items-center justify-between h-auto py-2.5 text-sm flex-wrap gap-3">
           <span className="hidden sm:block">Официальный дилер Cersanit в России</span>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <a href="tel:+79052050900" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-              <Phone className="h-3.5 w-3.5" />
+              <Phone className="h-3.5 w-3.5 shrink-0" />
               <span>+7 (905) 205-09-00</span>
             </a>
-            <span className="hidden sm:block text-primary-foreground/70">Пн-Пт 9:00-18:00</span>
+            <span className="text-primary-foreground/70">Ежедневно 10:00-18:00</span>
+            <a href="https://t.me/flyroman" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+              <MessageCircle className="h-3.5 w-3.5 shrink-0" />
+              <span>@flyroman</span>
+            </a>
           </div>
         </div>
       </div>
