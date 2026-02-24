@@ -110,6 +110,11 @@ export default function CollectionsPage() {
     if (selectedColors.length > 0) {
       result = result.filter((c) => c.colors.some((col) => selectedColors.includes(col)))
     }
+    if (selectedDesigns.length > 0) {
+      const designMapping = filterOptions.designCategoryMapping as Record<string, string[]>
+      const matchedCollections = selectedDesigns.flatMap(d => designMapping[d] || [])
+      result = result.filter((c) => matchedCollections.includes(c.name))
+    }
     if (selectedSurfaceTypes.length > 0) {
       result = result.filter((c) => 
         c.surfaces.some((s) => {

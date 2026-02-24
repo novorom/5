@@ -102,6 +102,13 @@ function CatalogContent() {
         const record = p as unknown as Record<string, unknown>
         const productValue = record[field] as string
         
+        // Special handling for designs: map generic category names to collections
+        if (key === "designs") {
+          const designMapping = filterOptions.designCategoryMapping as Record<string, string[]>
+          const matchedCollections = values.flatMap(v => designMapping[v] || [])
+          return matchedCollections.includes(productValue)
+        }
+        
         // Special handling for surface_types: "полированная (глянец)" matches both "глянцевая" and "полированная"
         if (key === "surface_types" && values.includes("полированная (глянец)")) {
           if (productValue === "глянцевая" || productValue === "полированная") {
