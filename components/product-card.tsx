@@ -25,7 +25,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-white">
         <Image
-          src={product.main_image || product.image || "/placeholder.jpg"}
+          src={product.main_image || product.images?.[0] || "/placeholder.jpg"}
           alt={product.name}
           fill
           className="object-contain p-3 transition-transform duration-300 group-hover:scale-105"
