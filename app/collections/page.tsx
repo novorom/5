@@ -366,14 +366,16 @@ export default function CollectionsPage() {
                     href={`/catalog?collection=${collection.slug}`}
                     className="group flex flex-col rounded-xl border border-border overflow-hidden bg-card hover:shadow-lg transition-all duration-300"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={collection.image}
-                        alt={`Коллекция ${collection.name}`}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
+                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                      {collection.image && (
+                        <Image
+                          src={collection.image}
+                          alt={`Коллекция ${collection.name}`}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      )}
                       {/* Badges */}
                       <div className="absolute top-3 left-3 flex items-center gap-1.5">
                         {collection.isNew && (
