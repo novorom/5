@@ -1,14 +1,45 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChevronLeft, Trash2, Plus, Minus } from 'lucide-react'
 import { useCart } from '@/lib/cart-context'
+import { CheckoutModal, type OrderData } from '@/components/checkout-modal'
 
 export default function CartPage() {
   const router = useRouter()
   const { items, removeItem, updateQuantity, clearCart, total } = useCart()
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+
+  const handleCheckout = async (orderData: OrderData) => {
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items,
+          total,
+          ...orderData,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit order')
+      }
+
+      // Clear cart and show success message
+      clearCart()
+      setIsCheckoutOpen(false)
+      
+      // Show success message
+      alert('Спасибо! Ваш заказ принят. Мы свяжемся с вами в ближайшее время.')
+      router.push('/catalog')
+    } catch (error) {
+      throw new Error('Ошибка при отправке заказа. Пожалуйста, попробуйте позже.')
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -143,7 +174,10 @@ export default function CartPage() {
                 </span>
               </div>
 
-              <button className="w-full h-11 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors mb-3">
+              <button 
+                onClick={() => setIsCheckoutOpen(true)}
+                className="w-full h-11 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors mb-3"
+              >
                 Оформить заказ
               </button>
 
@@ -164,6 +198,14 @@ export default function CartPage() {
           </div>
         </div>
       </div>
+
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        onSubmit={handleCheckout}
+        total={total}
+        itemCount={items.length}
+      />
     </div>
   )
 }
