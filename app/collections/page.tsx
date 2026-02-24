@@ -4,23 +4,35 @@ import { useState, useMemo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ChevronDown, ChevronRight, SlidersHorizontal, X } from "lucide-react"
-import { collections, products } from "@/lib/mock-data"
+import { products } from "@/lib/products-data"
+import { filterOptions } from "@/lib/filter-options"
 
 /* ---------- derived data ---------- */
-console.log("[v0] Collections data:", collections.length, "collections found")
+// Generate collections from products
+const allCollections = [...new Set(products.map((p) => p.collection))].sort()
+const collections = allCollections.map((collName) => ({
+  id: collName,
+  name: collName,
+  slug: collName.toLowerCase().replace(/\s+/g, "-"),
+  image: "",
+  product_count: products.filter((p) => p.collection === collName).length,
+}))
+
 const collectionsWithMeta = collections.map((c) => {
   const collProducts = products.filter((p) => p.collection === c.name)
   const types = [...new Set(collProducts.map((p) => p.product_type))]
-  const formats = [...new Set(collProducts.map((p) => p.format))]
   const colors = [...new Set(collProducts.map((p) => p.color))]
+  const surfaces = [...new Set(collProducts.map((p) => p.surface))]
   const isNew = collProducts.some((p) => p.is_new)
   const isBestseller = collProducts.some((p) => p.is_bestseller)
-  return { ...c, types, formats, colors, isNew, isBestseller, realCount: collProducts.length }
+  return { ...c, types, colors, surfaces, isNew, isBestseller, realCount: collProducts.length }
 })
-console.log("[v0] Collections with metadata:", collectionsWithMeta.length, "processed")
 
 const allTypes = [...new Set(collectionsWithMeta.flatMap((c) => c.types))].sort()
-const allFormats = [...new Set(products.map((p) => p.format))].sort()
+const allColors = filterOptions.colors
+const allDimensions = filterOptions.dimensions
+const allDesigns = filterOptions.designs
+const allSurfaceTypes = filterOptions.surface_types
 
 /* ---------- Filter sidebar section ---------- */
 function FilterSection({
@@ -53,6 +65,12 @@ function FilterSection({
         <div className="flex flex-col gap-1.5 mt-2">
           {options.map((opt) => (
             <label key={opt} className="flex items-center gap-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selected.includes(opt) ?? false}
+                onChange={() => onToggle(opt)}
+                className="sr-only"
+              />
               <div
                 className={`h-4 w-4 rounded border flex items-center justify-center transition-colors ${
                   selected.includes(opt)
@@ -80,7 +98,10 @@ function FilterSection({
 /* ---------- Main page ---------- */
 export default function CollectionsPage() {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
-  const [selectedFormats, setSelectedFormats] = useState<string[]>([])
+  const [selectedColors, setSelectedColors] = useState<string[]>([])
+  const [selectedDimensions, setSelectedDimensions] = useState<string[]>([])
+  const [selectedDesigns, setSelectedDesigns] = useState<string[]>([])
+  const [selectedSurfaceTypes, setSelectedSurfaceTypes] = useState<string[]>([])
   const [sortBy, setSortBy] = useState<"popular" | "name-asc" | "name-desc">("popular")
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
@@ -88,7 +109,7 @@ export default function CollectionsPage() {
     setArr(arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value])
   }
 
-  const activeFilterCount = selectedTypes.length + selectedFormats.length
+  const activeFilterCount = selectedTypes.length + selectedColors.length + selectedDimensions.length + selectedDesigns.length + selectedSurfaceTypes.length
 
   const filtered = useMemo(() => {
     let result = [...collectionsWithMeta]
@@ -96,8 +117,26 @@ export default function CollectionsPage() {
     if (selectedTypes.length > 0) {
       result = result.filter((c) => c.types.some((t) => selectedTypes.includes(t)))
     }
-    if (selectedFormats.length > 0) {
-      result = result.filter((c) => c.formats.some((f) => selectedFormats.includes(f)))
+    if (selectedColors.length > 0) {
+      result = result.filter((c) => c.colors.some((col) => selectedColors.includes(col)))
+    }
+    if (selectedDesigns.length > 0) {
+      const designMapping = filterOptions.designCategoryMapping as Record<string, string[]>
+      const matchedCollections = selectedDesigns.flatMap(d => designMapping[d] || [])
+      result = result.filter((c) => matchedCollections.includes(c.name))
+    }
+    if (selectedSurfaceTypes.length > 0) {
+      result = result.filter((c) => 
+        c.surfaces.some((s) => {
+          // Special handling: "полированная (глянец)" matches both "глянцевая" and "полированная"
+          if (selectedSurfaceTypes.includes("полированная (глянец)")) {
+            if (s === "глянцевая" || s === "полированная") {
+              return true
+            }
+          }
+          return selectedSurfaceTypes.includes(s)
+        })
+      )
     }
 
     switch (sortBy) {
@@ -113,27 +152,48 @@ export default function CollectionsPage() {
     }
 
     return result
-  }, [selectedTypes, selectedFormats, sortBy])
+  }, [selectedTypes, selectedColors, selectedDesigns, selectedSurfaceTypes, sortBy])
 
   const clearFilters = () => {
     setSelectedTypes([])
-    setSelectedFormats([])
+    setSelectedColors([])
+    setSelectedDimensions([])
+    setSelectedDesigns([])
+    setSelectedSurfaceTypes([])
   }
 
   const filtersContent = (
     <div className="flex flex-col gap-2">
       <FilterSection
-        title="Тип продукции"
+        title="Тип плитки"
         options={allTypes}
         selected={selectedTypes}
         onToggle={toggleFilter(selectedTypes, setSelectedTypes)}
         defaultOpen
       />
       <FilterSection
-        title="Формат"
-        options={allFormats}
-        selected={selectedFormats}
-        onToggle={toggleFilter(selectedFormats, setSelectedFormats)}
+        title="Цвет"
+        options={allColors}
+        selected={selectedColors}
+        onToggle={toggleFilter(selectedColors, setSelectedColors)}
+      />
+      <FilterSection
+        title="Размер"
+        options={allDimensions}
+        selected={selectedDimensions}
+        onToggle={toggleFilter(selectedDimensions, setSelectedDimensions)}
+      />
+      <FilterSection
+        title="Дизайн"
+        options={allDesigns}
+        selected={selectedDesigns}
+        onToggle={toggleFilter(selectedDesigns, setSelectedDesigns)}
+      />
+      <FilterSection
+        title="Тип поверхности"
+        options={allSurfaceTypes}
+        selected={selectedSurfaceTypes}
+        onToggle={toggleFilter(selectedSurfaceTypes, setSelectedSurfaceTypes)}
       />
       {activeFilterCount > 0 && (
         <button
@@ -217,13 +277,43 @@ export default function CollectionsPage() {
                 <X className="h-3 w-3" />
               </button>
             ))}
-            {selectedFormats.map((f) => (
+            {selectedColors.map((c) => (
               <button
-                key={f}
-                onClick={() => toggleFilter(selectedFormats, setSelectedFormats)(f)}
+                key={c}
+                onClick={() => toggleFilter(selectedColors, setSelectedColors)(c)}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors"
               >
-                {f}
+                {c}
+                <X className="h-3 w-3" />
+              </button>
+            ))}
+            {selectedDimensions.map((d) => (
+              <button
+                key={d}
+                onClick={() => toggleFilter(selectedDimensions, setSelectedDimensions)(d)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors"
+              >
+                {d}
+                <X className="h-3 w-3" />
+              </button>
+            ))}
+            {selectedDesigns.map((d) => (
+              <button
+                key={d}
+                onClick={() => toggleFilter(selectedDesigns, setSelectedDesigns)(d)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors"
+              >
+                {d}
+                <X className="h-3 w-3" />
+              </button>
+            ))}
+            {selectedSurfaceTypes.map((s) => (
+              <button
+                key={s}
+                onClick={() => toggleFilter(selectedSurfaceTypes, setSelectedSurfaceTypes)(s)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors"
+              >
+                {s}
                 <X className="h-3 w-3" />
               </button>
             ))}
@@ -276,14 +366,16 @@ export default function CollectionsPage() {
                     href={`/catalog?collection=${collection.slug}`}
                     className="group flex flex-col rounded-xl border border-border overflow-hidden bg-card hover:shadow-lg transition-all duration-300"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={collection.image}
-                        alt={`Коллекция ${collection.name}`}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
+                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                      {collection.image && (
+                        <Image
+                          src={collection.image}
+                          alt={`Коллекция ${collection.name}`}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      )}
                       {/* Badges */}
                       <div className="absolute top-3 left-3 flex items-center gap-1.5">
                         {collection.isNew && (

@@ -34,36 +34,18 @@ function CatalogContent() {
   const initialFilters = useMemo((): Record<string, string[]> => {
     const filters: Record<string, string[]> = {}
     
-    if (collectionSlug) {
-      const found = collections.find((c) => c.slug === collectionSlug)
-      if (found) {
-        filters.collections = [found.name]
-      }
-    }
-    
     if (productType) {
       filters.product_types = [productType]
     }
     
     return filters
-  }, [collectionSlug, productType])
+  }, [productType])
 
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>(initialFilters)
-  const [priceRange, setPriceRange] = useState<[number, number]>([
-    filterOptions.price_range.min,
-    filterOptions.price_range.max,
-  ])
 
   // Sync filters when URL changes (e.g. navigating from collections page or categories)
   useEffect(() => {
     const filters: Record<string, string[]> = {}
-    
-    if (collectionSlug) {
-      const found = collections.find((c) => c.slug === collectionSlug)
-      if (found) {
-        filters.collections = [found.name]
-      }
-    }
     
     if (productType) {
       filters.product_types = [productType]
@@ -72,7 +54,7 @@ function CatalogContent() {
     if (Object.keys(filters).length > 0) {
       setActiveFilters(filters)
     }
-  }, [collectionSlug, productType])
+  }, [productType])
   const [sort, setSort] = useState("popular")
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [gridCols, setGridCols] = useState<3 | 4>(3)
@@ -89,7 +71,6 @@ function CatalogContent() {
 
   const handleClearAll = () => {
     setActiveFilters({})
-    setPriceRange([filterOptions.price_range.min, filterOptions.price_range.max])
   }
 
   const filteredProducts = useMemo(() => {
@@ -111,23 +92,33 @@ function CatalogContent() {
       result = result.filter((p) => {
         const fieldMap: Record<string, string> = {
           product_types: "product_type",
-          collections: "collection",
           colors: "color",
-          formats: "format",
-          surfaces: "surface",
-          applications: "application",
+          dimensions: "format",
+          designs: "collection",
+          surface_types: "surface",
         }
         const field = fieldMap[key]
         if (!field) return true
         const record = p as unknown as Record<string, unknown>
-        return values.includes(record[field] as string)
+        const productValue = record[field] as string
+        
+        // Special handling for designs: map generic category names to collections
+        if (key === "designs") {
+          const designMapping = filterOptions.designCategoryMapping as Record<string, string[]>
+          const matchedCollections = values.flatMap(v => designMapping[v] || [])
+          return matchedCollections.includes(productValue)
+        }
+        
+        // Special handling for surface_types: "полированная (глянец)" matches both "глянцевая" and "полированная"
+        if (key === "surface_types" && values.includes("полированная (глянец)")) {
+          if (productValue === "глянцевая" || productValue === "полированная") {
+            return true
+          }
+        }
+        
+        return values.includes(productValue)
       })
     })
-
-    // Apply price filter
-    result = result.filter(
-      (p) => p.price_retail >= priceRange[0] && p.price_retail <= priceRange[1]
-    )
 
     // Sort
     switch (sort) {
@@ -149,7 +140,7 @@ function CatalogContent() {
     }
 
     return result
-  }, [searchQuery, activeFilters, priceRange, sort])
+  }, [searchQuery, activeFilters, sort])
 
   const totalActiveFilters = Object.values(activeFilters).flat().length
 
@@ -264,9 +255,7 @@ function CatalogContent() {
             <div className="sticky top-28 bg-background rounded-xl border border-border p-5">
               <CatalogFilters
                 activeFilters={activeFilters}
-                priceRange={priceRange}
                 onFilterChange={handleFilterChange}
-                onPriceChange={setPriceRange}
                 onClearAll={handleClearAll}
               />
             </div>
@@ -311,9 +300,7 @@ function CatalogContent() {
       <MobileFilterDrawer isOpen={mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
         <CatalogFilters
           activeFilters={activeFilters}
-          priceRange={priceRange}
           onFilterChange={handleFilterChange}
-          onPriceChange={setPriceRange}
           onClearAll={handleClearAll}
         />
       </MobileFilterDrawer>

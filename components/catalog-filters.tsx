@@ -12,26 +12,21 @@ interface FilterSection {
 
 const filterSections: FilterSection[] = [
   { label: "Тип плитки", key: "product_types", options: filterOptions.product_types },
-  { label: "Коллекция", key: "collections", options: filterOptions.collections },
   { label: "Цвет", key: "colors", options: filterOptions.colors },
-  { label: "Формат", key: "formats", options: filterOptions.formats },
-  { label: "Поверхность", key: "surfaces", options: filterOptions.surfaces },
-  { label: "Назначение", key: "applications", options: filterOptions.applications },
+  { label: "Размер", key: "dimensions", options: filterOptions.dimensions },
+  { label: "Дизайн", key: "designs", options: filterOptions.designs },
+  { label: "Тип поверхности", key: "surface_types", options: filterOptions.surface_types },
 ]
 
 interface CatalogFiltersProps {
   activeFilters: Record<string, string[]>
-  priceRange: [number, number]
   onFilterChange: (key: string, value: string) => void
-  onPriceChange: (range: [number, number]) => void
   onClearAll: () => void
 }
 
 export function CatalogFilters({
   activeFilters,
-  priceRange,
   onFilterChange,
-  onPriceChange,
   onClearAll,
 }: CatalogFiltersProps) {
   const [openSections, setOpenSections] = useState<string[]>(["product_types", "colors"])
@@ -59,40 +54,6 @@ export function CatalogFilters({
         )}
       </div>
 
-      {/* Price Range */}
-      <div className="pb-4 mb-4 border-b border-border">
-        <button
-          onClick={() => toggleSection("price")}
-          className="flex items-center justify-between w-full py-2"
-        >
-          <span className="text-sm font-medium text-foreground">Цена, {"₽/м²"}</span>
-          <ChevronDown
-            className={`h-4 w-4 text-muted-foreground transition-transform ${
-              openSections.includes("price") ? "rotate-180" : ""
-            }`}
-          />
-        </button>
-        {openSections.includes("price") && (
-          <div className="mt-2 flex items-center gap-2">
-            <input
-              type="number"
-              value={priceRange[0]}
-              onChange={(e) => onPriceChange([Number(e.target.value), priceRange[1]])}
-              className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
-              placeholder={`от ${filterOptions.price_range.min}`}
-            />
-            <span className="text-muted-foreground text-sm">-</span>
-            <input
-              type="number"
-              value={priceRange[1]}
-              onChange={(e) => onPriceChange([priceRange[0], Number(e.target.value)])}
-              className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-primary"
-              placeholder={`до ${filterOptions.price_range.max}`}
-            />
-          </div>
-        )}
-      </div>
-
       {/* Filter Sections */}
       {filterSections.map((section) => (
         <div key={section.key} className="pb-4 mb-4 border-b border-border last:border-0">
@@ -117,7 +78,7 @@ export function CatalogFilters({
           {openSections.includes(section.key) && (
             <div className="mt-1 flex flex-col gap-1">
               {section.options.map((option) => {
-                const isActive = activeFilters[section.key]?.includes(option)
+                const isActive = (activeFilters[section.key] ?? []).includes(option)
                 return (
                   <label
                     key={option}
@@ -138,7 +99,7 @@ export function CatalogFilters({
                     </div>
                     <input
                       type="checkbox"
-                      checked={isActive}
+                      checked={isActive ?? false}
                       onChange={() => onFilterChange(section.key, option)}
                       className="sr-only"
                     />

@@ -92,9 +92,6 @@ export default function HomePage() {
                   <h3 className="text-base lg:text-lg font-semibold text-background text-balance">
                     {category.name}
                   </h3>
-                  <span className="text-sm text-background/60 mt-0.5 block">
-                    {category.count} товаров
-                  </span>
                 </div>
               </Link>
             ))}

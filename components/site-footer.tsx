@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link"
 import { Phone, Mail, MapPin, MessageCircle, Clock } from "lucide-react"
+import { Logo } from "./logo"
 
 const footerLinks = {
   catalog: [
@@ -22,22 +25,39 @@ const footerLinks = {
   ],
 }
 
+const socialLinks = [
+  {
+    icon: '🏪',
+    name: 'Avito',
+    url: 'https://www.avito.ru/brands/i1860592?src=sharing',
+  },
+  {
+    icon: '📱',
+    name: 'VK',
+    url: 'https://vk.com/tilebox',
+  },
+  {
+    icon: '👥',
+    name: 'Facebook',
+    url: 'https://www.facebook.com/groups/1371104416315103',
+  },
+  {
+    icon: '📷',
+    name: 'Instagram',
+    url: 'https://www.instagram.com/keraplit/',
+  },
+]
+
 export function SiteFooter() {
   return (
-    <footer className="bg-foreground text-background">
-      <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-foreground text-background" suppressHydrationWarning>
+      <div className="mx-auto max-w-7xl px-4 py-12" suppressHydrationWarning>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" suppressHydrationWarning>
           {/* Brand */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">C</span>
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-lg font-bold tracking-tight text-background">Cersanit</span>
-                <span className="text-[10px] text-background/50 tracking-widest uppercase">Shop</span>
-              </div>
-            </div>
+            <Link href="/" className="w-fit">
+              <Logo className="h-16 w-auto" />
+            </Link>
             <p className="text-sm text-background/60 leading-relaxed">
               Официальный дилер керамической плитки Cersanit в России. Более 750 наименований в наличии.
             </p>
@@ -54,7 +74,27 @@ export function SiteFooter() {
                 <MessageCircle className="h-4 w-4 shrink-0" />
                 @flyroman
               </a>
-              <span className="flex items-center gap-2 text-background/70">
+              
+              {/* Social Media Links */}
+              <div className="mt-2 pt-2 border-t border-background/10">
+                <p className="text-xs text-background/50 uppercase tracking-widest mb-2">Найдите нас</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={social.name}
+                      className="text-lg text-background/70 hover:text-background transition-colors"
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              
+              <span className="flex items-center gap-2 text-background/70 mt-3 pt-2 border-t border-background/10">
                 <MapPin className="h-4 w-4 shrink-0" />
                 СПб, Янино-1, участок 37
               </span>
@@ -70,10 +110,11 @@ export function SiteFooter() {
             <h3 className="text-sm font-semibold text-background mb-4">Каталог</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.catalog.map((link) => (
-                <li key={link.label}>
+                <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
                     className="text-sm text-background/60 hover:text-background transition-colors"
+                    suppressHydrationWarning
                   >
                     {link.label}
                   </Link>
@@ -87,10 +128,11 @@ export function SiteFooter() {
             <h3 className="text-sm font-semibold text-background mb-4">Информация</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.info.map((link) => (
-                <li key={link.label}>
+                <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
                     className="text-sm text-background/60 hover:text-background transition-colors"
+                    suppressHydrationWarning
                   >
                     {link.label}
                   </Link>
@@ -104,10 +146,11 @@ export function SiteFooter() {
             <h3 className="text-sm font-semibold text-background mb-4">Покупателям</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.help.map((link) => (
-                <li key={link.label}>
+                <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
                     className="text-sm text-background/60 hover:text-background transition-colors"
+                    suppressHydrationWarning
                   >
                     {link.label}
                   </Link>
@@ -120,7 +163,7 @@ export function SiteFooter() {
         {/* Bottom */}
         <div className="mt-10 pt-6 border-t border-background/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-background/40">
-            {"2024-2025 Cersanit Shop. Все права защищены."}
+            {"2024-2025 Дом Плитки CERSANIT. Все права защищены."}
           </p>
           <div className="flex items-center gap-4">
             <Link href="#" className="text-xs text-background/40 hover:text-background/60 transition-colors">
