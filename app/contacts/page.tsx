@@ -24,22 +24,20 @@ export default function ContactsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Формируем сообщение для Telegram
-    const message = `
-📩 Новое сообщение с сайта
-
-👤 Имя: ${formData.name}
-📧 Email: ${formData.email}
-📱 Телефон: ${formData.phone}
-
-💬 Сообщение:
-${formData.message}
-    `
-
     try {
-      // Отправляем на Telegram через бота
-      // Примечание: для этого нужно настроить Telegram бот и его token
-      // Пока просто показываем успешное сообщение
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send message')
+      }
+
+      const data = await response.json()
+      console.log('Message sent:', data)
+      
       setSubmitted(true)
       setFormData({ name: '', email: '', phone: '', message: '' })
       
@@ -48,6 +46,7 @@ ${formData.message}
       }, 5000)
     } catch (error) {
       console.error('Error sending message:', error)
+      alert('Ошибка при отправке сообщения. Пожалуйста, попробуйте позже.')
     }
   }
 
