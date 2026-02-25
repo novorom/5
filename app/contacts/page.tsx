@@ -119,7 +119,7 @@ export default function ContactsPage() {
       </section>
 
       {/* Contact Channels */}
-      <section className="px-4 py-16 lg:py-20">
+      <section className="px-4 py-10 lg:py-13">
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {contactChannels.map((channel) => {
