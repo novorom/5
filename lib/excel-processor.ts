@@ -49,32 +49,27 @@ export function processYaninoFile(
   const workbook = read(new Uint8Array(buffer))
   const sheet = workbook.Sheets[workbook.SheetNames[0]]
   
-  // First try by column names
-  let rows = utils.sheet_to_json<YaninoRow>(sheet)
-  console.log(`[v0] Янино: Прочитано по названиям колонок: ${rows.length} строк`)
+  // Read by column indices - Column A (0) = SKU, Column K (10) = Free stock m²
+  const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
+  console.log(`[v0] Янино: Всего строк в файле: ${arrayData.length}`)
   
-  // If no data found by column names, try by column indices (A=0, K=10)
-  if (rows.length === 0) {
-    console.log(`[v0] Янино: Нет данных по названиям, пробую по индексам...`)
-    const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
-    console.log(`[v0] Янино: Всего строк в файле (включая пусто): ${arrayData.length}`)
-    if (arrayData.length > 0) {
-      console.log(`[v0] Янино: Первая строка:`, arrayData[0])
-      console.log(`[v0] Янино: Вторая строка:`, arrayData[1])
-    }
-    rows = arrayData
-      .map((row: any[]) => ({
-        артикул: row[0],  // Column A (index 0) = SKU
-        "свободный остаток м.кв.": row[10], // Column K (index 10) = Free stock m²
-      }))
-      .filter((row) => row.артикул) // Filter out empty rows
-    console.log(`[v0] Янино: После фильтрации пустых: ${rows.length} строк`)
+  if (arrayData.length > 0) {
+    console.log(`[v0] Янино: Первая строка:`, arrayData[0])
+    console.log(`[v0] Янино: Вторая строка:`, arrayData[1])
+    console.log(`[v0] Янино: Третья строка:`, arrayData[2])
   }
-
-  console.log(`[v0] Янино: Найдено строк для обработки: ${rows.length}`)
+  
+  const rows = arrayData
+    .map((row: any[]) => ({
+      артикул: row[0],  // Column A (index 0) = SKU
+      "свободный остаток м.кв.": row[10], // Column K (index 10) = Free stock m²
+    }))
+    .filter((row) => row.артикул) // Filter out empty rows
+  
+  console.log(`[v0] Янино: После фильтрации пустых строк: ${rows.length} строк`)
   if (rows.length > 0) {
-    console.log(`[v0] Янино: Примеры SKU из файла:`, rows.slice(0, 3).map(r => r.артикул || r.article))
-    console.log(`[v0] Янино: Первая полная строка:`, rows[0])
+    console.log(`[v0] Янино: Примеры SKU:`, rows.slice(0, 5).map(r => r.артикул))
+    console.log(`[v0] Янино: Примеры остатков:`, rows.slice(0, 5).map(r => r["свободный остаток м.кв."]))
   }
   
   const updatedProducts = [...products]
@@ -85,18 +80,11 @@ export function processYaninoFile(
   let matchedCount = 0
 
   rows.forEach((row, index) => {
-    const skuFromFile = row.артикул || row.article
-    const stock = parseNumber(row["свободный остаток м.кв."] || row["free m2"])
-
-    // Log first 3 rows to debug structure
-    if (index < 3) {
-      console.log(`[v0] Янино Row ${index}: skuFromFile="${skuFromFile}", stock=${stock}, keys:`, Object.keys(row))
-    }
+    const skuFromFile = row.артикул
+    const stock = parseNumber(row["свободный остаток м.кв."])
 
     if (!skuFromFile) {
-      if (index < 5) {
-        console.log(`[v0] Янино Row ${index}: Пропущена - пустой SKU`)
-      }
+      console.log(`[v0] Янино Row ${index}: Пропущена - пустой SKU`)
       return
     }
 
@@ -122,17 +110,18 @@ export function processYaninoFile(
     if (productIndex !== -1) {
       updatedProducts[productIndex].stock_yanino = stock
       matchedCount++
-      console.log(`[v0] ✓ Совпадение: ${skuFromFile} (товар id: ${updatedProducts[productIndex].id}) -> stock: ${stock}`)
+      if (matchedCount <= 5) {
+        console.log(`[v0] ✓ Совпадение #${matchedCount}: ${skuFromFile} (товар id: ${updatedProducts[productIndex].id}) -> stock: ${stock}`)
+      }
     } else {
       unmatched.push(String(skuFromFile))
-      // Log first few unmatched for debugging
-      if (unmatched.length <= 3) {
+      if (unmatched.length <= 5) {
         console.log(`[v0] ✗ Не найдено: ${skuFromFile}`)
       }
     }
   })
 
-  console.log(`[v0] Янино: Результат - Совпадено ${matchedCount} из ${rows.length} товаров`)
+  console.log(`[v0] Янино: РЕЗУЛЬТАТ - Совпадено ${matchedCount} из ${rows.length} товаров`)
   console.log(`[v0] Янино: Не найдено ${unmatched.length} товаров`)
   
   return { updatedProducts, unmatched, matchedCount }
