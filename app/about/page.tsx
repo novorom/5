@@ -2,8 +2,13 @@ import Link from 'next/link'
 import { ExternalLink, Award, MapPin, Package } from 'lucide-react'
 
 export const metadata = {
-  title: 'О компании | Керамическая плитка и керамогранит',
-  description: 'Узнайте о нашей компании, истории с 2011 года, наших партнерах и отзывах на Avito.',
+  title: 'О компании Дом Плитки -- магазин Cersanit в СПб с 2011 года',
+  description: 'Более 13 лет на рынке керамической плитки в Санкт-Петербурге. Склад и шоурум в Янино. 10+ производителей-партнёров. Отзывы на Avito. Доставка по СПб и ЛО.',
+  alternates: { canonical: '/about' },
+  openGraph: {
+    title: 'О компании Дом Плитки -- магазин Cersanit в СПб',
+    description: 'Более 13 лет на рынке керамической плитки в Санкт-Петербурге. Склад и шоурум в Янино.',
+  },
 }
 
 export default function AboutPage() {
