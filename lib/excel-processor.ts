@@ -51,21 +51,35 @@ export function processYaninoFile(
   
   // First try by column names
   let rows = utils.sheet_to_json<YaninoRow>(sheet)
+  console.log(`[v0] Янино: Прочитано по названиям колонок: ${rows.length} строк`)
   
   // If no data found by column names, try by column indices (A=0, K=10)
   if (rows.length === 0) {
+    console.log(`[v0] Янино: Нет данных по названиям, пробую по индексам...`)
     const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
+    console.log(`[v0] Янино: Всего строк в файле (включая пусто): ${arrayData.length}`)
+    if (arrayData.length > 0) {
+      console.log(`[v0] Янино: Первая строка:`, arrayData[0])
+      console.log(`[v0] Янино: Вторая строка:`, arrayData[1])
+    }
     rows = arrayData
       .map((row: any[]) => ({
         артикул: row[0],  // Column A (index 0) = SKU
         "свободный остаток м.кв.": row[10], // Column K (index 10) = Free stock m²
       }))
       .filter((row) => row.артикул) // Filter out empty rows
+    console.log(`[v0] Янино: После фильтрации пустых: ${rows.length} строк`)
   }
 
-  console.log(`[v0] Янино: Найдено строк в файле: ${rows.length}`)
+  console.log(`[v0] Янино: Найдено строк для обработки: ${rows.length}`)
+  if (rows.length > 0) {
+    console.log(`[v0] Янино: Примеры артикулов:`, rows.slice(0, 3).map(r => r.артикул || r.article))
+  }
   
   const updatedProducts = [...products]
+  console.log(`[v0] Янино: Всего товаров в базе: ${updatedProducts.length}`)
+  console.log(`[v0] Янино: Примеры ID товаров:`, updatedProducts.slice(0, 3).map(p => p.id))
+  
   const unmatched: string[] = []
   let matchedCount = 0
 
@@ -83,14 +97,18 @@ export function processYaninoFile(
     if (productIndex !== -1) {
       updatedProducts[productIndex].stock_yanino = stock
       matchedCount++
-      console.log(`[v0] Совпадение: ${normalizedArticle} -> stock: ${stock}`)
+      console.log(`[v0] ✓ Совпадение: ${article} (нормализовано: ${normalizedArticle}) -> stock: ${stock}`)
     } else {
       unmatched.push(String(article))
+      // Log first few unmatched for debugging
+      if (unmatched.length <= 3) {
+        console.log(`[v0] ✗ Не найдено: ${article} (нормализовано: ${normalizedArticle})`)
+      }
     }
   })
 
-  console.log(`[v0] Янино: Совпадено ${matchedCount} из ${rows.length} товаров`)
-  console.log(`[v0] Янино: Не найдено: ${unmatched.length} товаров`)
+  console.log(`[v0] Янино: Результат - Совпадено ${matchedCount} из ${rows.length} товаров`)
+  console.log(`[v0] Янино: Не найдено ${unmatched.length} товаров`)
   
   return { updatedProducts, unmatched, matchedCount }
 }
