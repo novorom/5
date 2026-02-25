@@ -314,10 +314,10 @@ export function HomeContent() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <a
-              href="tel:+78123091234"
+              href="tel:+79052050900"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-background text-foreground font-medium text-sm hover:bg-background/90 transition-colors"
             >
-              Позвонить нам
+              +7 (905) 205-09-00
             </a>
             <Link
               href="/catalog"
