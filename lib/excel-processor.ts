@@ -219,9 +219,13 @@ export function processPriceFile(
   const unmatched: string[] = []
   let matchedCount = 0
 
-  rows.forEach((row) => {
+  rows.forEach((row, idx) => {
     const skuFromFile = row.артикул
     const retailPrice = parseNumber(row["розничная цена"])
+    
+    if (idx < 5) {
+      console.log(`[v0] Price row ${idx}: article=${skuFromFile}, raw_price=${row["розничная цена"]}, parsed_price=${retailPrice}, after_discount=${Math.round(retailPrice * 0.8)}`)
+    }
 
     if (!skuFromFile || !retailPrice) return
 
