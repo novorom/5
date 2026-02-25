@@ -306,10 +306,9 @@ export default function AdminContent() {
                       <p>Совпадено товаров: {res.result.matchedCount}</p>
                       <p>Обновлено: {res.result.matchedCount}</p>
                       {res.result.unmatched.length > 0 && (
-                        <div className="mt-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded">
-                          <p className="font-medium text-amber-700 mb-1">Не найдены артикулы ({res.result.unmatched.length}):</p>
-                          <p className="text-xs text-amber-600 line-clamp-3">{res.result.unmatched.join(", ")}</p>
-                        </div>
+                        <p className="text-xs text-amber-600 mt-2">
+                          Артикулов в файле не найдено на сайте: {res.result.unmatched.length}
+                        </p>
                       )}
                     </div>
                   </div>
