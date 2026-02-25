@@ -55,12 +55,16 @@ export function processYaninoFile(
   // If no data found by column names, try by column indices (A=0, K=10)
   if (rows.length === 0) {
     const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
-    rows = arrayData.map((row: any[]) => ({
-      артикул: row[0],  // Column A (index 0) = SKU
-      "свободный остаток м.кв.": row[10], // Column K (index 10) = Free stock m²
-    }))
+    rows = arrayData
+      .map((row: any[]) => ({
+        артикул: row[0],  // Column A (index 0) = SKU
+        "свободный остаток м.кв.": row[10], // Column K (index 10) = Free stock m²
+      }))
+      .filter((row) => row.артикул) // Filter out empty rows
   }
 
+  console.log(`[v0] Янино: Найдено строк в файле: ${rows.length}`)
+  
   const updatedProducts = [...products]
   const unmatched: string[] = []
   let matchedCount = 0
@@ -79,12 +83,15 @@ export function processYaninoFile(
     if (productIndex !== -1) {
       updatedProducts[productIndex].stock_yanino = stock
       matchedCount++
-      console.log(`[v0] Updated product ${normalizedArticle} with stock_yanino: ${stock}`)
+      console.log(`[v0] Совпадение: ${normalizedArticle} -> stock: ${stock}`)
     } else {
       unmatched.push(String(article))
     }
   })
 
+  console.log(`[v0] Янино: Совпадено ${matchedCount} из ${rows.length} товаров`)
+  console.log(`[v0] Янино: Не найдено: ${unmatched.length} товаров`)
+  
   return { updatedProducts, unmatched, matchedCount }
 }
 
