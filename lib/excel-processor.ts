@@ -207,6 +207,14 @@ export function processPriceFile(
   // Skip header row and move to actual data (dataStartRow is the header, so data starts at dataStartRow + 1)
   const dataRows = arrayData.slice(dataStartRow + 1)
   
+  // Log ALL columns from first row to find the correct price column
+  if (dataRows[0]) {
+    console.log(`[v0] Price: First data row - ALL columns:`)
+    for (let i = 0; i < dataRows[0].length; i++) {
+      console.log(`  col[${i}]: ${dataRows[0][i]}`)
+    }
+  }
+  
   const rows = dataRows
     .map((row: any[]) => ({
       артикул: row[2],  // Column C (index 2) = Артикул
