@@ -191,21 +191,27 @@ export function processPriceFile(
     sheet = workbook.Sheets[cersanitSheetName]
   }
 
-  // Read by column indices - Column C (2) = Артикул, Column M (12) = Розничная цена
-  // File has headers in row 6, so data starts from row 7 (index 6)
+  // Read by column indices - Column C (2) = Артикул, Column L (11) = Розничная цена
   const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
   
-  console.log(`[v0] Прайс DEBUG: Строка 6 (заголовки):`, arrayData[5])
-  console.log(`[v0] Прайс DEBUG: Строка 7 (первые данные):`, arrayData[6])
-  console.log(`[v0] Прайс DEBUG: Столбцы для row 7:`, { col0: arrayData[6]?.[0], col2: arrayData[6]?.[2], col10: arrayData[6]?.[10], col11: arrayData[6]?.[11], col12: arrayData[6]?.[12], col13: arrayData[6]?.[13] })
+  // Find where actual data starts by looking for rows with many columns
+  let dataStartRow = 0
+  for (let i = 0; i < Math.min(arrayData.length, 100); i++) {
+    if (arrayData[i] && arrayData[i].length > 10) {
+      console.log(`[v0] Прайс: Row ${i} has ${arrayData[i].length} columns`)
+      if (!dataStartRow) dataStartRow = i
+    }
+  }
   
-  // Skip first 6 rows (headers), process only data rows (starting from index 6)
-  const dataRows = arrayData.slice(6)
+  console.log(`[v0] Прайс: Data starts at row ${dataStartRow}, first row:`, arrayData[dataStartRow]?.slice(0, 15))
+  
+  // Skip to where actual data starts
+  const dataRows = arrayData.slice(dataStartRow)
   
   const rows = dataRows
     .map((row: any[]) => ({
       артикул: row[2],  // Column C (index 2) = Артикул
-      "розничная цена": row[12], // Column M (index 12) = Розничная цена
+      "розничная цена": row[11], // Column L (index 11) = Розничная цена
     }))
     .filter((row) => row.артикул) // Filter out empty rows
 
