@@ -143,31 +143,91 @@ export function processZavodFile(
 ): ExcelProcessResult {
   const workbook = read(new Uint8Array(buffer))
   const sheet = workbook.Sheets[workbook.SheetNames[0]]
-  const rows = utils.sheet_to_json<ZavodRow>(sheet)
-
+  
+  // Read by column indices - Column D (3) = Артикул, Column P (15) = Итого Свободный остаток
+  // File has headers in row 8, so data starts from row 9 (index 8)
+  const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
+  console.log(`[v0] Завод: Всего строк в файле: ${arrayData.length}`)
+  
+  if (arrayData.length > 0) {
+    console.log(`[v0] Завод: Строка 8 (заголовки):`, arrayData[7])
+    console.log(`[v0] Завод: Строка 9 (первые данные):`, arrayData[8])
+    console.log(`[v0] Завод: Строка 10:`, arrayData[9])
+  }
+  
+  // Skip first 8 rows (headers), process only data rows (starting from index 8)
+  const dataRows = arrayData.slice(8)
+  console.log(`[v0] Завод: Строк для обработки (после пропуска заголовков): ${dataRows.length}`)
+  
+  const rows = dataRows
+    .map((row: any[]) => ({
+      артикул: row[3],  // Column D (index 3) = Артикул
+      "свободный остаток": row[15], // Column P (index 15) = Итого Свободный остаток
+    }))
+    .filter((row) => row.артикул) // Filter out empty rows
+  
+  console.log(`[v0] Завод: После фильтрации пустых строк: ${rows.length} строк`)
+  if (rows.length > 0) {
+    console.log(`[v0] Завод: Примеры артикулов (первые 5):`, rows.slice(0, 5).map(r => r.артикул))
+    console.log(`[v0] Завод: Примеры остатков (первые 5):`, rows.slice(0, 5).map(r => r["свободный остаток"]))
+  }
+  
   const updatedProducts = [...products]
+  console.log(`[v0] Завод: Всего товаров в базе: ${updatedProducts.length}`)
+  console.log(`[v0] Завод: Примеры товаров (id, sku):`, updatedProducts.slice(0, 3).map(p => ({ id: p.id, sku: p.sku })))
+  
   const unmatched: string[] = []
   let matchedCount = 0
 
-  rows.forEach((row) => {
-    const article = row.артикул || row.article
-    const stock = parseNumber(row["свободный остаток"] || row["free stock"])
+  rows.forEach((row, index) => {
+    const skuFromFile = row.артикул
+    const stock = parseNumber(row["свободный остаток"])
 
-    if (!article) return
+    if (!skuFromFile) {
+      if (index < 3) console.log(`[v0] Завод Row ${index}: Пропущена - пустой артикул`)
+      return
+    }
 
-    const normalizedArticle = normalizeArticle(article)
-    const productIndex = updatedProducts.findIndex(
-      (p) => normalizeArticle(p.id) === normalizedArticle
-    )
+    const normalizedSkuFromFile = normalizeArticle(skuFromFile)
+    
+    // Find product by SKU (exact match) or by comparing with id
+    let productIndex = updatedProducts.findIndex((p) => {
+      // Try direct SKU match
+      if (p.sku && normalizeArticle(p.sku) === normalizedSkuFromFile) {
+        return true
+      }
+      // Try matching with id (which is the article)
+      if (p.id && normalizeArticle(p.id) === normalizedSkuFromFile) {
+        return true
+      }
+      // Try matching with spaces removed
+      const cleanedSku = normalizedSkuFromFile.replace(/\s+/g, "")
+      if (p.sku && normalizeArticle(p.sku).replace(/\s+/g, "") === cleanedSku) {
+        return true
+      }
+      if (p.id && normalizeArticle(p.id).replace(/\s+/g, "") === cleanedSku) {
+        return true
+      }
+      return false
+    })
 
     if (productIndex !== -1) {
       updatedProducts[productIndex].stock_factory = stock
       matchedCount++
+      if (matchedCount <= 5) {
+        console.log(`[v0] ✓ Совпадение #${matchedCount}: ${skuFromFile} (товар id: ${updatedProducts[productIndex].id}) -> stock: ${stock}`)
+      }
     } else {
-      unmatched.push(String(article))
+      unmatched.push(String(skuFromFile))
+      if (unmatched.length <= 5) {
+        console.log(`[v0] ✗ Не найдено: ${skuFromFile}`)
+      }
     }
   })
 
+  console.log(`[v0] Завод: РЕЗУЛЬТАТ - Совпадено ${matchedCount} из ${rows.length} товаров`)
+  console.log(`[v0] Завод: Не найдено ${unmatched.length} товаров`)
+  
   return { updatedProducts, unmatched, matchedCount }
 }
 
