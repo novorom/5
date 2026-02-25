@@ -201,11 +201,6 @@ export function processPriceFile(
     if (row && row.length > 10 && row[2] && (String(row[2]).startsWith('A') || /^\d{5}/.test(String(row[2])))) {
       // Found a row with article number in column 2 - this is where data starts
       dataStartRow = i
-      console.log(`[v0] Price: Product data starts at row ${i}`)
-      console.log(`[v0] Price: Sample row - all columns:`)
-      for (let j = 0; j < row.length; j++) {
-        console.log(`  col[${j}]: ${row[j]}`)
-      }
       break
     }
   }
@@ -225,13 +220,9 @@ export function processPriceFile(
   const unmatched: string[] = []
   let matchedCount = 0
 
-  rows.forEach((row, idx) => {
+  rows.forEach((row) => {
     const skuFromFile = row.артикул
     const retailPrice = parseNumber(row["розничная цена"])
-    
-    if (idx < 5) {
-      console.log(`[v0] Price row ${idx}: article=${skuFromFile}, raw_price=${row["розничная цена"]}, parsed_price=${retailPrice}, after_discount=${Math.round(retailPrice * 0.8)}`)
-    }
 
     if (!skuFromFile || !retailPrice) return
 
