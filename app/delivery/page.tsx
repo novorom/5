@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { Clock, MapPin, Truck, ChevronRight, Phone } from 'lucide-react'
 
+// Metadata is defined in layout below
+
 export default function DeliveryPage() {
   return (
     <main className="min-h-screen bg-background pt-8 pb-16">

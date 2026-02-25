@@ -19,6 +19,11 @@ const footerLinks = {
   ],
   help: [
     { label: "Каталог", href: "/catalog" },
+    { label: "Плитка в СПб", href: "/spb" },
+    { label: "Керамическая плитка СПб", href: "/keramicheskaya-plitka-spb" },
+    { label: "Керамогранит СПб", href: "/keramogranit-spb" },
+    { label: "Плитка для ванной СПб", href: "/plitka-dlya-vannoj-spb" },
+    { label: "Мозаика СПб", href: "/mozaika-spb" },
   ],
 }
 

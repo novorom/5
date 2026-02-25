@@ -50,6 +50,57 @@ export default function ProductPage() {
   const totalStock = (product.stock_yanino ?? 0) + (product.stock_factory ?? 0)
   const hasDiscount = product.price_official && product.price_official > product.price_retail
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.images || [],
+    description: product.description || `${product.name} -- купить в Санкт-Петербурге со склада Янино. ${product.brand} коллекция ${product.collection}. Доставка по СПб и ЛО.`,
+    brand: { "@type": "Brand", name: product.brand },
+    sku: product.sku,
+    category: product.product_type,
+    color: product.color,
+    material: product.material_type,
+    offers: {
+      "@type": "Offer",
+      url: `https://cersanit-spb.ru/catalog/${product.slug}`,
+      priceCurrency: "RUB",
+      price: product.price_retail,
+      availability: totalStock > 0 ? "https://schema.org/InStock" : "https://schema.org/PreOrder",
+      seller: {
+        "@type": "Organization",
+        name: "Дом Плитки CERSANIT",
+      },
+      areaServed: {
+        "@type": "City",
+        name: "Санкт-Петербург",
+      },
+      deliveryLeadTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 2,
+        unitCode: "DAY",
+      },
+    },
+    ...(product.rating ? {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: product.rating,
+        reviewCount: product.reviews_count || 1,
+      },
+    } : {}),
+  }
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://cersanit-spb.ru" },
+      { "@type": "ListItem", position: 2, name: "Каталог", item: "https://cersanit-spb.ru/catalog" },
+      { "@type": "ListItem", position: 3, name: product.name, item: `https://cersanit-spb.ru/catalog/${product.slug}` },
+    ],
+  }
+
   const tabs: { id: TabId; label: string }[] = [
     { id: "description", label: "Описание" },
     { id: "specs", label: "Характеристики" },
@@ -74,6 +125,14 @@ export default function ProductPage() {
 
   return (
     <div className="bg-muted/30 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Breadcrumbs */}
       <div className="bg-background border-b border-border">
         <div className="mx-auto max-w-7xl px-4 py-3">
@@ -279,6 +338,19 @@ export default function ProductPage() {
                       {room}
                     </span>
                   ))}
+                </div>
+                {/* SEO commercial triggers */}
+                <div className="mt-8 p-5 rounded-xl bg-muted/50 border border-border">
+                  <h3 className="text-base font-semibold text-foreground mb-3">
+                    {`Купить ${product.name} в Санкт-Петербурге`}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {`${product.name} из коллекции ${product.collection} доступна к заказу в нашем магазине в Санкт-Петербурге. `}
+                    {totalStock > 0
+                      ? `В наличии на складе Янино${(product.stock_yanino ?? 0) > 0 ? ` -- ${product.stock_yanino} м²` : ""}. Самовывоз бесплатно, доставка по СПб и ЛО от 1 рабочего дня. `
+                      : "Доступно под заказ с завода Cersanit. "}
+                    {"Бесплатный расчёт необходимого количества плитки. Оплата наличным и безналичным расчётом. Для юридических лиц -- работа по счёту с НДС."}
+                  </p>
                 </div>
               </div>
             )}
