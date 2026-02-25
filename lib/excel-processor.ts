@@ -198,12 +198,9 @@ export function processPriceFile(
   let dataStartRow = 0
   for (let i = 0; i < Math.min(arrayData.length, 100); i++) {
     if (arrayData[i] && arrayData[i].length > 10) {
-      console.log(`[v0] Прайс: Row ${i} has ${arrayData[i].length} columns`)
       if (!dataStartRow) dataStartRow = i
     }
   }
-  
-  console.log(`[v0] Прайс: Data starts at row ${dataStartRow}, first row:`, arrayData[dataStartRow]?.slice(0, 15))
   
   // Skip to where actual data starts
   const dataRows = arrayData.slice(dataStartRow)
