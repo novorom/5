@@ -73,36 +73,50 @@ export function processYaninoFile(
 
   console.log(`[v0] Янино: Найдено строк для обработки: ${rows.length}`)
   if (rows.length > 0) {
-    console.log(`[v0] Янино: Примеры артикулов:`, rows.slice(0, 3).map(r => r.артикул || r.article))
+    console.log(`[v0] Янино: Примеры SKU из файла:`, rows.slice(0, 3).map(r => r.артикул || r.article))
   }
   
   const updatedProducts = [...products]
   console.log(`[v0] Янино: Всего товаров в базе: ${updatedProducts.length}`)
-  console.log(`[v0] Янино: Примеры ID товаров:`, updatedProducts.slice(0, 3).map(p => p.id))
+  console.log(`[v0] Янино: Примеры товаров (id, sku):`, updatedProducts.slice(0, 3).map(p => ({ id: p.id, sku: p.sku })))
   
   const unmatched: string[] = []
   let matchedCount = 0
 
   rows.forEach((row) => {
-    const article = row.артикул || row.article
+    const skuFromFile = row.артикул || row.article
     const stock = parseNumber(row["свободный остаток м.кв."] || row["free m2"])
 
-    if (!article) return
+    if (!skuFromFile) return
 
-    const normalizedArticle = normalizeArticle(article)
-    const productIndex = updatedProducts.findIndex(
-      (p) => normalizeArticle(p.id) === normalizedArticle
-    )
+    const normalizedSkuFromFile = normalizeArticle(skuFromFile)
+    
+    // Find product by SKU (exact match) or by comparing with id (article without first letter)
+    let productIndex = updatedProducts.findIndex((p) => {
+      // Try direct SKU match
+      if (p.sku && normalizeArticle(p.sku) === normalizedSkuFromFile) {
+        return true
+      }
+      // Try matching with id (which is the article, SKU without first letter)
+      if (p.id && normalizeArticle(p.id) === normalizedSkuFromFile) {
+        return true
+      }
+      // Try matching: if file has A17986, and id is 17986 (remove first char)
+      if (skuFromFile.length > 0 && p.id && normalizeArticle(skuFromFile.substring(1)) === normalizeArticle(p.id)) {
+        return true
+      }
+      return false
+    })
 
     if (productIndex !== -1) {
       updatedProducts[productIndex].stock_yanino = stock
       matchedCount++
-      console.log(`[v0] ✓ Совпадение: ${article} (нормализовано: ${normalizedArticle}) -> stock: ${stock}`)
+      console.log(`[v0] ✓ Совпадение: ${skuFromFile} (товар id: ${updatedProducts[productIndex].id}) -> stock: ${stock}`)
     } else {
-      unmatched.push(String(article))
+      unmatched.push(String(skuFromFile))
       // Log first few unmatched for debugging
       if (unmatched.length <= 3) {
-        console.log(`[v0] ✗ Не найдено: ${article} (нормализовано: ${normalizedArticle})`)
+        console.log(`[v0] ✗ Не найдено: ${skuFromFile}`)
       }
     }
   })
