@@ -267,23 +267,20 @@ export function processPriceFile(
     sheet = workbook.Sheets[cersanitSheetName]
   }
 
-  // Read by column indices - Column C (2) = Артикул, Column L (11) = Розничная цена
+  // Read by column indices - Column C (2) = Артикул, Column M (12) = Розничная цена
   // File has headers in row 6, so data starts from row 7 (index 6)
   const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
   
-  console.log(`[v0] Прайс: Первые 3 строки файла (индексы 0-2):`, arrayData.slice(0, 3))
-  console.log(`[v0] Прайс: Строки 6-8 (заголовки и начало данных):`, arrayData.slice(5, 8))
+  console.log(`[v0] Прайс: Первая строка данных (все столбцы):`, arrayData[6])
+  console.log(`[v0] Прайс: Столбцы 2, 11, 12 первой строки данных:`, { col2: arrayData[6]?.[2], col11: arrayData[6]?.[11], col12: arrayData[6]?.[12] })
   
   // Skip first 6 rows (headers), process only data rows (starting from index 6)
   const dataRows = arrayData.slice(6)
   
-  console.log(`[v0] Прайс: Первая строка данных (все столбцы):`, dataRows[0])
-  console.log(`[v0] Прайс: Первая строка - столбец 2 (артикул):`, dataRows[0]?.[2], ", столбец 11 (цена):`, dataRows[0]?.[11])
-  
   const rows = dataRows
     .map((row: any[]) => ({
       артикул: row[2],  // Column C (index 2) = Артикул
-      "розничная цена": row[11], // Column L (index 11) = Розничная цена
+      "розничная цена": row[12], // Column M (index 12) = Розничная цена
     }))
     .filter((row) => row.артикул) // Filter out empty rows
 
