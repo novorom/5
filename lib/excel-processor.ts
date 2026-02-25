@@ -49,7 +49,7 @@ export function processYaninoFile(
   const workbook = read(new Uint8Array(buffer))
   const sheet = workbook.Sheets[workbook.SheetNames[0]]
   
-  // Read by column indices - Column A (0) = SKU, Column K (10) = Free stock m²
+  // Read by column indices - Column A (0) = SKU, Column L (11) = Free stock m²
   // File has headers in row 7, so data starts from row 8 (index 8)
   const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
   console.log(`[v0] Янино: Всего строк в файле: ${arrayData.length}`)
@@ -68,7 +68,7 @@ export function processYaninoFile(
   const rows = dataRows
     .map((row: any[]) => ({
       артикул: row[0],  // Column A (index 0) = SKU
-      "свободный остаток м.кв.": row[10], // Column K (index 10) = Free stock m²
+      "свободный остаток м.кв.": row[11], // Column L (index 11) = Free stock m²
     }))
     .filter((row) => row.артикул) // Filter out empty rows
   
