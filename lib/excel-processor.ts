@@ -74,6 +74,7 @@ export function processYaninoFile(
   console.log(`[v0] Янино: Найдено строк для обработки: ${rows.length}`)
   if (rows.length > 0) {
     console.log(`[v0] Янино: Примеры SKU из файла:`, rows.slice(0, 3).map(r => r.артикул || r.article))
+    console.log(`[v0] Янино: Первая полная строка:`, rows[0])
   }
   
   const updatedProducts = [...products]
@@ -83,11 +84,21 @@ export function processYaninoFile(
   const unmatched: string[] = []
   let matchedCount = 0
 
-  rows.forEach((row) => {
+  rows.forEach((row, index) => {
     const skuFromFile = row.артикул || row.article
     const stock = parseNumber(row["свободный остаток м.кв."] || row["free m2"])
 
-    if (!skuFromFile) return
+    // Log first 3 rows to debug structure
+    if (index < 3) {
+      console.log(`[v0] Янино Row ${index}: skuFromFile="${skuFromFile}", stock=${stock}, keys:`, Object.keys(row))
+    }
+
+    if (!skuFromFile) {
+      if (index < 5) {
+        console.log(`[v0] Янино Row ${index}: Пропущена - пустой SKU`)
+      }
+      return
+    }
 
     const normalizedSkuFromFile = normalizeArticle(skuFromFile)
     
