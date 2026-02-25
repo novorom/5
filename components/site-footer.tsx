@@ -19,9 +19,6 @@ const footerLinks = {
   ],
   help: [
     { label: "Каталог", href: "/catalog" },
-    { label: "Как выбрать плитку", href: "#" },
-    { label: "Уход за плиткой", href: "#" },
-    { label: "Видеообзоры", href: "#" },
   ],
 }
 
@@ -52,9 +49,9 @@ export function SiteFooter() {
   return (
     <footer className="bg-foreground text-background" suppressHydrationWarning>
       <div className="mx-auto max-w-7xl px-4 py-12" suppressHydrationWarning>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12" suppressHydrationWarning>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12" suppressHydrationWarning>
           {/* Brand - wider column */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
+          <div className="lg:col-span-1 flex flex-col gap-4">
             <Link href="/" className="w-fit">
               <Logo className="h-16 w-auto" />
             </Link>
