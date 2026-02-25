@@ -237,6 +237,8 @@ export function processPriceFile(
 ): ExcelProcessResult {
   const workbook = read(new Uint8Array(buffer))
   
+  console.log(`[v0] Прайс: Доступные вкладки в файле:`, workbook.SheetNames)
+  
   // Find the Церсанит sheet - look for sheet name containing Церсанит, Cersanit, or use first sheet
   let sheet = workbook.Sheets[workbook.SheetNames[0]]
   
@@ -261,6 +263,7 @@ export function processPriceFile(
   if (arrayData.length > 0) {
     console.log(`[v0] Прайс: Строка 6 (заголовки):`, arrayData[5])
     console.log(`[v0] Прайс: Строка 7 (первые данные):`, arrayData[6])
+    console.log(`[v0] Прайс: Строка 8:`, arrayData[7])
   }
   
   // Skip first 6 rows (headers), process only data rows (starting from index 6)
