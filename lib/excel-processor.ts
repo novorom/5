@@ -194,26 +194,24 @@ export function processPriceFile(
   // Read by column indices - Column C (2) = Артикул, Column K (10) = Розничная цена
   const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
   
-  // Find where actual data starts by looking for rows with many columns
+  // Find where actual product data starts by looking for rows where col[2] contains article numbers
   let dataStartRow = 0
-  for (let i = 0; i < Math.min(arrayData.length, 100); i++) {
-    if (arrayData[i] && arrayData[i].length > 10) {
-      if (!dataStartRow) {
-        dataStartRow = i
+  for (let i = 0; i < Math.min(arrayData.length, 150); i++) {
+    const row = arrayData[i]
+    if (row && row.length > 10 && row[2] && (String(row[2]).startsWith('A') || /^\d{5}/.test(String(row[2])))) {
+      // Found a row with article number in column 2 - this is where data starts
+      dataStartRow = i
+      console.log(`[v0] Price: Product data starts at row ${i}`)
+      console.log(`[v0] Price: Sample row - all columns:`)
+      for (let j = 0; j < row.length; j++) {
+        console.log(`  col[${j}]: ${row[j]}`)
       }
+      break
     }
   }
   
-  // Skip header row and move to actual data (dataStartRow is the header, so data starts at dataStartRow + 1)
-  const dataRows = arrayData.slice(dataStartRow + 1)
-  
-  // Log ALL columns from first row to find the correct price column
-  if (dataRows[0]) {
-    console.log(`[v0] Price: First data row - ALL columns:`)
-    for (let i = 0; i < dataRows[0].length; i++) {
-      console.log(`  col[${i}]: ${dataRows[0][i]}`)
-    }
-  }
+  // Skip to where actual product data starts
+  const dataRows = arrayData.slice(dataStartRow)
   
   const rows = dataRows
     .map((row: any[]) => ({
