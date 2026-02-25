@@ -74,13 +74,18 @@ export default function CollectionsPage() {
   
   // Generate collections from products
   const allCollections = [...new Set(products.map((p) => p.collection))].sort()
-  const collections = allCollections.map((collName) => ({
-    id: collName,
-    name: collName,
-    slug: collName.toLowerCase().replace(/\s+/g, "-"),
-    image: "",
-    product_count: products.filter((p) => p.collection === collName).length,
-  }))
+  const collections = allCollections.map((collName) => {
+    const collectionProducts = products.filter((p) => p.collection === collName)
+    const firstProduct = collectionProducts[0]
+    
+    return {
+      id: collName,
+      name: collName,
+      slug: collName.toLowerCase().replace(/\s+/g, "-"),
+      image: firstProduct?.collection_image || firstProduct?.main_image || "",
+      product_count: collectionProducts.length,
+    }
+  })
 
   const collectionsWithMeta = collections.map((c) => {
     const collProducts = products.filter((p) => p.collection === c.name)
