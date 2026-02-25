@@ -248,33 +248,76 @@ export function processPriceFile(
   
   if (cersanitSheetName) {
     sheet = workbook.Sheets[cersanitSheetName]
+    console.log(`[v0] Прайс: Найдена вкладка "${cersanitSheetName}"`)
+  } else {
+    console.log(`[v0] Прайс: Вкладка Церсанит не найдена, используется первая вкладка "${workbook.SheetNames[0]}"`)
   }
 
-  const rows = utils.sheet_to_json<PriceRow>(sheet)
+  // Read by column indices - Column C (2) = Артикул, Column L (11) = Розничная цена
+  // File has headers in row 6, so data starts from row 7 (index 6)
+  const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
+  console.log(`[v0] Прайс: Всего строк в файле: ${arrayData.length}`)
+  
+  if (arrayData.length > 0) {
+    console.log(`[v0] Прайс: Строка 6 (заголовки):`, arrayData[5])
+    console.log(`[v0] Прайс: Строка 7 (первые данные):`, arrayData[6])
+  }
+  
+  // Skip first 6 rows (headers), process only data rows (starting from index 6)
+  const dataRows = arrayData.slice(6)
+  console.log(`[v0] Прайс: Строк для обработки (после пропуска заголовков): ${dataRows.length}`)
+  
+  const rows = dataRows
+    .map((row: any[]) => ({
+      артикул: row[2],  // Column C (index 2) = Артикул
+      "розничная цена": row[11], // Column L (index 11) = Розничная цена
+    }))
+    .filter((row) => row.артикул) // Filter out empty rows
+  
+  console.log(`[v0] Прайс: После фильтрации пустых строк: ${rows.length} строк`)
+  if (rows.length > 0) {
+    console.log(`[v0] Прайс: Примеры артикулов (первые 5):`, rows.slice(0, 5).map(r => r.артикул))
+    console.log(`[v0] Прайс: Примеры цен (первые 5):`, rows.slice(0, 5).map(r => r["розничная цена"]))
+  }
 
   const updatedProducts = [...products]
+  console.log(`[v0] Прайс: Всего товаров в базе: ${updatedProducts.length}`)
+  
   const unmatched: string[] = []
   let matchedCount = 0
 
-  rows.forEach((row) => {
-    const article = row.артикул || row.article
-    const retailPrice = parseNumber(row["розничная цена"] || row["retail price"])
+  rows.forEach((row, index) => {
+    const skuFromFile = row.артикул
+    const retailPrice = parseNumber(row["розничная цена"])
 
-    if (!article || !retailPrice) return
+    if (!skuFromFile || !retailPrice) {
+      if (index < 3) console.log(`[v0] Прайс Row ${index}: Пропущена - пустой артикул или цена`)
+      return
+    }
 
-    const normalizedArticle = normalizeArticle(article)
+    const normalizedSkuFromFile = normalizeArticle(skuFromFile)
     const productIndex = updatedProducts.findIndex(
-      (p) => normalizeArticle(p.id) === normalizedArticle
+      (p) => normalizeArticle(p.id) === normalizedSkuFromFile
     )
 
     if (productIndex !== -1) {
       // Apply 20% discount (multiply by 0.8)
-      updatedProducts[productIndex].price_retail = Math.round(retailPrice * 0.8)
+      const discountedPrice = Math.round(retailPrice * 0.8)
+      updatedProducts[productIndex].price_retail = discountedPrice
       matchedCount++
+      if (matchedCount <= 5) {
+        console.log(`[v0] ✓ Совпадение #${matchedCount}: ${skuFromFile} (цена: ${retailPrice} -> ${discountedPrice} с 20% скидкой)`)
+      }
     } else {
-      unmatched.push(String(article))
+      unmatched.push(String(skuFromFile))
+      if (unmatched.length <= 5) {
+        console.log(`[v0] ✗ Не найдено: ${skuFromFile}`)
+      }
     }
   })
 
+  console.log(`[v0] Прайс: РЕЗУЛЬТАТ - Совпадено ${matchedCount} из ${rows.length} товаров`)
+  console.log(`[v0] Прайс: Не найдено ${unmatched.length} товаров`)
+  
   return { updatedProducts, unmatched, matchedCount }
 }
