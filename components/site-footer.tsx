@@ -55,9 +55,6 @@ export function SiteFooter() {
             <Link href="/" className="w-fit">
               <Logo className="h-16 w-auto" />
             </Link>
-            <p className="text-sm text-background/60 leading-relaxed">
-              Официальный дилер керамической плитки Cersanit в России. Более 750 наименований в наличии.
-            </p>
             <div className="flex flex-col gap-2 text-sm">
               <a href="tel:+79052050900" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
                 <Phone className="h-4 w-4 shrink-0" />
