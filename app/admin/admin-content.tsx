@@ -78,12 +78,15 @@ export default function AdminContent() {
       const file = fileInput.files[0]
       let result: ExcelProcessResult
 
+      // Convert File to ArrayBuffer
+      const arrayBuffer = await file.arrayBuffer()
+
       if (fileType === "yanino") {
-        result = await processYaninoFile(file, products)
+        result = processYaninoFile(arrayBuffer, products)
       } else if (fileType === "zavod") {
-        result = await processZavodFile(file, products)
+        result = processZavodFile(arrayBuffer, products)
       } else {
-        result = await processPriceFile(file, products)
+        result = processPriceFile(arrayBuffer, products)
       }
 
       setProcessingResults((prev) => [

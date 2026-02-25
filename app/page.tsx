@@ -1,14 +1,18 @@
-import Link from "next/link"
-import Image from "next/image"
-import { ArrowRight, Truck, ShieldCheck, Award, ChevronRight } from "lucide-react"
+import { Suspense } from "react"
+import dynamic from "next/dynamic"
 import { categories, collections } from "@/lib/mock-data"
-import { ProductCard } from "@/components/product-card"
-import { HomeContent } from "@/components/home-content"
+
+const HomeContent = dynamic(() => import("@/components/home-content").then(mod => ({ default: mod.HomeContent })), {
+  ssr: false,
+  loading: () => <div className="min-h-screen bg-background" />
+})
 
 export default function HomePage() {
   return (
     <div className="flex flex-col">
-      <HomeContent />
+      <Suspense fallback={<div className="min-h-screen bg-background" />}>
+        <HomeContent />
+      </Suspense>
     </div>
   )
 }
