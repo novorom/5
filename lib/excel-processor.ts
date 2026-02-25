@@ -48,7 +48,18 @@ export function processYaninoFile(
 ): ExcelProcessResult {
   const workbook = read(new Uint8Array(buffer))
   const sheet = workbook.Sheets[workbook.SheetNames[0]]
-  const rows = utils.sheet_to_json<YaninoRow>(sheet)
+  
+  // First try by column names
+  let rows = utils.sheet_to_json<YaninoRow>(sheet)
+  
+  // If no data found by column names, try by column indices (A=0, K=10)
+  if (rows.length === 0) {
+    const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
+    rows = arrayData.map((row: any[]) => ({
+      артикул: row[0],  // Column A (index 0) = SKU
+      "свободный остаток м.кв.": row[10], // Column K (index 10) = Free stock m²
+    }))
+  }
 
   const updatedProducts = [...products]
   const unmatched: string[] = []
@@ -68,6 +79,7 @@ export function processYaninoFile(
     if (productIndex !== -1) {
       updatedProducts[productIndex].stock_yanino = stock
       matchedCount++
+      console.log(`[v0] Updated product ${normalizedArticle} with stock_yanino: ${stock}`)
     } else {
       unmatched.push(String(article))
     }
