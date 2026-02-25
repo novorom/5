@@ -19,9 +19,6 @@ const footerLinks = {
   ],
   help: [
     { label: "Каталог", href: "/catalog" },
-    { label: "Как выбрать плитку", href: "#" },
-    { label: "Уход за плиткой", href: "#" },
-    { label: "Видеообзоры", href: "#" },
   ],
 }
 
@@ -54,13 +51,10 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 py-12" suppressHydrationWarning>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12" suppressHydrationWarning>
           {/* Brand - wider column */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
+          <div className="lg:col-span-1 flex flex-col gap-4">
             <Link href="/" className="w-fit">
               <Logo className="h-16 w-auto" />
             </Link>
-            <p className="text-sm text-background/60 leading-relaxed">
-              Официальный дилер керамической плитки Cersanit в России. Более 750 наименований в наличии.
-            </p>
             <div className="flex flex-col gap-2 text-sm">
               <a href="tel:+79052050900" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
                 <Phone className="h-4 w-4 shrink-0" />
@@ -74,25 +68,6 @@ export function SiteFooter() {
                 <MessageCircle className="h-4 w-4 shrink-0" />
                 @flyroman
               </a>
-              
-              {/* Social Media Links */}
-              <div className="mt-2 pt-2 border-t border-background/10">
-                <p className="text-xs text-background/50 uppercase tracking-widest mb-2">Найдите нас</p>
-                <div className="flex items-center gap-2 flex-wrap">
-                  {socialLinks.map((social) => (
-                    <a
-                      key={social.name}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title={social.name}
-                      className="text-lg text-background/70 hover:text-background transition-colors"
-                    >
-                      {social.icon}
-                    </a>
-                  ))}
-                </div>
-              </div>
               
               <span className="flex items-center gap-2 text-background/70 mt-3 pt-2 border-t border-background/10">
                 <MapPin className="h-4 w-4 shrink-0" />
@@ -157,6 +132,25 @@ export function SiteFooter() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Social Media - rightmost column */}
+          <div>
+            <h3 className="text-sm font-semibold text-background mb-4 uppercase tracking-widest">Найдите нас</h3>
+            <div className="flex items-center gap-3 flex-wrap">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={social.name}
+                  className="text-2xl text-background/70 hover:text-background transition-colors"
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
