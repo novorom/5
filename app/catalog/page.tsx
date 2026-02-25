@@ -101,7 +101,9 @@ function CatalogContent() {
       result = result.filter((p) =>
         p.name.toLowerCase().includes(query) ||
         p.collection.toLowerCase().includes(query) ||
-        p.product_type.toLowerCase().includes(query)
+        p.product_type.toLowerCase().includes(query) ||
+        p.id.toLowerCase().includes(query) ||
+        (p.sku && p.sku.toLowerCase().includes(query))
       )
     }
 
