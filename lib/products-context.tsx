@@ -50,7 +50,12 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
 export function useProducts() {
   const context = useContext(ProductsContext)
   if (context === undefined) {
-    throw new Error("useProducts must be used within ProductsProvider")
+    // Return a fallback during SSR or before provider is mounted
+    return {
+      products: initialProducts,
+      updateProducts: () => {},
+      resetProducts: () => {},
+    }
   }
   return context
 }

@@ -3,9 +3,6 @@
 import { Suspense } from "react"
 import dynamicImport from "next/dynamic"
 
-export const dynamic = "force-dynamic"
-export const revalidate = 0
-
 // Lazy load the admin content to defer context usage until client-side
 const AdminContentLazy = dynamicImport(() => import("./admin-content"), {
   loading: () => (
@@ -15,7 +12,6 @@ const AdminContentLazy = dynamicImport(() => import("./admin-content"), {
       </div>
     </div>
   ),
-  ssr: false,
 })
 
 export default function AdminPage() {
