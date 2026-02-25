@@ -297,18 +297,18 @@ export default function AdminContent() {
                   <div key={idx} className="border border-border rounded-lg p-4">
                     <div className="flex items-start justify-between mb-3">
                       <h3 className="font-semibold text-foreground flex items-center gap-2">
-                        {res.result.success ? <Check className="w-5 h-5 text-green-600" /> : <X className="w-5 h-5 text-red-600" />}
+                        {res.result.matchedCount > 0 ? <Check className="w-5 h-5 text-green-600" /> : <X className="w-5 h-5 text-red-600" />}
                         {res.fileType}
                       </h3>
                     </div>
 
                     <div className="text-sm text-foreground/60 space-y-1">
-                      <p>Обработано товаров: {res.result.processedCount}</p>
-                      <p>Обновлено: {res.result.updatedCount}</p>
-                      {res.result.unmatchedArticles.length > 0 && (
+                      <p>Совпадено товаров: {res.result.matchedCount}</p>
+                      <p>Обновлено: {res.result.updatedProducts.length}</p>
+                      {res.result.unmatched.length > 0 && (
                         <div className="mt-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded">
-                          <p className="font-medium text-amber-700 mb-1">Не найдены артикулы ({res.result.unmatchedArticles.length}):</p>
-                          <p className="text-xs text-amber-600 line-clamp-3">{res.result.unmatchedArticles.join(", ")}</p>
+                          <p className="font-medium text-amber-700 mb-1">Не найдены артикулы ({res.result.unmatched.length}):</p>
+                          <p className="text-xs text-amber-600 line-clamp-3">{res.result.unmatched.join(", ")}</p>
                         </div>
                       )}
                     </div>
