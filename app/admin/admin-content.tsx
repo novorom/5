@@ -10,6 +10,7 @@ import {
   type ExcelProcessResult,
 } from "@/lib/excel-processor"
 import { verifyAdminAccess } from "@/lib/admin-auth"
+import { getAdminSession, setAdminSession, clearAdminSession } from "@/lib/admin-session"
 import { useProducts } from "@/lib/products-context"
 
 interface ProcessingResult {
@@ -34,6 +35,14 @@ export default function AdminContent() {
   // Initialize products on mount
   useEffect(() => {
     setProducts(contextProducts)
+    
+    // Check for existing valid session
+    const { isValid, isExpired } = getAdminSession()
+    if (isValid) {
+      setIsAuthenticated(true)
+    } else if (isExpired) {
+      setAuthError("Сессия истекла, введите пароль снова")
+    }
   }, [contextProducts])
 
   const handleLogin = (e: React.FormEvent) => {
@@ -41,6 +50,7 @@ export default function AdminContent() {
     setAuthError("")
 
     if (verifyAdminAccess(passcode)) {
+      setAdminSession()
       setIsAuthenticated(true)
       setPasscode("")
     } else {
@@ -49,6 +59,7 @@ export default function AdminContent() {
   }
 
   const handleLogout = () => {
+    clearAdminSession()
     setIsAuthenticated(false)
     setPasscode("")
     setProcessingResults([])
