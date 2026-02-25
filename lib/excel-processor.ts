@@ -210,8 +210,14 @@ export function processPriceFile(
   // Skip to where actual data starts
   const dataRows = arrayData.slice(dataStartRow)
   
-  console.log(`[v0] Price: First row to process:`, dataRows[0]?.slice(0, 15))
-  console.log(`[v0] Price: Columns [2, 10, 11, 12]:`, { col2: dataRows[0]?.[2], col10: dataRows[0]?.[10], col11: dataRows[0]?.[11], col12: dataRows[0]?.[12] })
+  // Log first row details clearly
+  const firstRow = dataRows[0]
+  console.log(`[v0] Price: First row col2 (article): ${firstRow?.[2]}`)
+  console.log(`[v0] Price: First row col10: ${firstRow?.[10]}`)
+  console.log(`[v0] Price: First row col11: ${firstRow?.[11]}`)
+  console.log(`[v0] Price: First row col12: ${firstRow?.[12]}`)
+  console.log(`[v0] Price: First row col13: ${firstRow?.[13]}`)
+  console.log(`[v0] Price: First row length: ${firstRow?.length}`)
   
   const rows = dataRows
     .map((row: any[]) => ({
