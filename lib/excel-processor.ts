@@ -50,16 +50,22 @@ export function processYaninoFile(
   const sheet = workbook.Sheets[workbook.SheetNames[0]]
   
   // Read by column indices - Column A (0) = SKU, Column K (10) = Free stock m²
+  // File has headers in row 7, so data starts from row 8 (index 8)
   const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
   console.log(`[v0] Янино: Всего строк в файле: ${arrayData.length}`)
   
   if (arrayData.length > 0) {
-    console.log(`[v0] Янино: Первая строка:`, arrayData[0])
-    console.log(`[v0] Янино: Вторая строка:`, arrayData[1])
-    console.log(`[v0] Янино: Третья строка:`, arrayData[2])
+    console.log(`[v0] Янино: Строка 1:`, arrayData[0])
+    console.log(`[v0] Янино: Строка 7 (заголовки):`, arrayData[6])
+    console.log(`[v0] Янино: Строка 8 (первые данные):`, arrayData[7])
+    console.log(`[v0] Янино: Строка 9:`, arrayData[8])
   }
   
-  const rows = arrayData
+  // Skip first 7 rows (headers), process only data rows (starting from index 7)
+  const dataRows = arrayData.slice(8)
+  console.log(`[v0] Янино: Строк для обработки (после пропуска заголовков): ${dataRows.length}`)
+  
+  const rows = dataRows
     .map((row: any[]) => ({
       артикул: row[0],  // Column A (index 0) = SKU
       "свободный остаток м.кв.": row[10], // Column K (index 10) = Free stock m²
@@ -68,8 +74,8 @@ export function processYaninoFile(
   
   console.log(`[v0] Янино: После фильтрации пустых строк: ${rows.length} строк`)
   if (rows.length > 0) {
-    console.log(`[v0] Янино: Примеры SKU:`, rows.slice(0, 5).map(r => r.артикул))
-    console.log(`[v0] Янино: Примеры остатков:`, rows.slice(0, 5).map(r => r["свободный остаток м.кв."]))
+    console.log(`[v0] Янино: Примеры SKU (первые 5):`, rows.slice(0, 5).map(r => r.артикул))
+    console.log(`[v0] Янино: Примеры остатков (первые 5):`, rows.slice(0, 5).map(r => r["свободный остаток м.кв."]))
   }
   
   const updatedProducts = [...products]
@@ -84,7 +90,7 @@ export function processYaninoFile(
     const stock = parseNumber(row["свободный остаток м.кв."])
 
     if (!skuFromFile) {
-      console.log(`[v0] Янино Row ${index}: Пропущена - пустой SKU`)
+      if (index < 3) console.log(`[v0] Янино Row ${index}: Пропущена - пустой SKU`)
       return
     }
 
@@ -100,8 +106,12 @@ export function processYaninoFile(
       if (p.id && normalizeArticle(p.id) === normalizedSkuFromFile) {
         return true
       }
-      // Try matching: if file has A17986, and id is 17986 (remove first char)
-      if (skuFromFile.length > 0 && p.id && normalizeArticle(skuFromFile.substring(1)) === normalizeArticle(p.id)) {
+      // Try matching: if file has AB 1001G, remove spaces and compare
+      const cleanedSku = normalizedSkuFromFile.replace(/\s+/g, "")
+      if (p.sku && normalizeArticle(p.sku).replace(/\s+/g, "") === cleanedSku) {
+        return true
+      }
+      if (p.id && normalizeArticle(p.id).replace(/\s+/g, "") === cleanedSku) {
         return true
       }
       return false
