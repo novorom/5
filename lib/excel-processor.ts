@@ -206,10 +206,15 @@ export function processPriceFile(
   const dataRows = arrayData.slice(dataStartRow)
   
   const rows = dataRows
-    .map((row: any[]) => ({
-      артикул: row[2],  // Column C (index 2) = Артикул
-      "розничная цена": row[11], // Column L (index 11) = Розничная цена
-    }))
+    .map((row: any[], idx) => {
+      if (idx < 2) {
+        console.log(`[v0] Price row ${idx}: col2=${row[2]}, col10=${row[10]}, col11=${row[11]}, col12=${row[12]}`)
+      }
+      return {
+        артикул: row[2],  // Column C (index 2) = Артикул
+        "розничная цена": row[11], // Column L (index 11) = Розничная цена
+      }
+    })
     .filter((row) => row.артикул) // Filter out empty rows
 
   const updatedProducts = [...products]
