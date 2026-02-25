@@ -194,27 +194,30 @@ export function processPriceFile(
   // Read by column indices - Column C (2) = Артикул, Column L (11) = Розничная цена
   const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
   
+  console.log(`[v0] Price: Total rows in file: ${arrayData.length}`)
+  
   // Find where actual data starts by looking for rows with many columns
   let dataStartRow = 0
   for (let i = 0; i < Math.min(arrayData.length, 100); i++) {
     if (arrayData[i] && arrayData[i].length > 10) {
-      if (!dataStartRow) dataStartRow = i
+      if (!dataStartRow) {
+        dataStartRow = i
+        console.log(`[v0] Price: Data starts at row ${i}`)
+      }
     }
   }
   
   // Skip to where actual data starts
   const dataRows = arrayData.slice(dataStartRow)
   
+  console.log(`[v0] Price: First row to process:`, dataRows[0]?.slice(0, 15))
+  console.log(`[v0] Price: Columns [2, 10, 11, 12]:`, { col2: dataRows[0]?.[2], col10: dataRows[0]?.[10], col11: dataRows[0]?.[11], col12: dataRows[0]?.[12] })
+  
   const rows = dataRows
-    .map((row: any[], idx) => {
-      if (idx < 2) {
-        console.log(`[v0] Price row ${idx}: col2=${row[2]}, col10=${row[10]}, col11=${row[11]}, col12=${row[12]}`)
-      }
-      return {
-        артикул: row[2],  // Column C (index 2) = Артикул
-        "розничная цена": row[11], // Column L (index 11) = Розничная цена
-      }
-    })
+    .map((row: any[]) => ({
+      артикул: row[2],  // Column C (index 2) = Артикул
+      "розничная цена": row[11], // Column L (index 11) = Розничная цена
+    }))
     .filter((row) => row.артикул) // Filter out empty rows
 
   const updatedProducts = [...products]
