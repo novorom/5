@@ -72,8 +72,8 @@ function FilterSection({
 export default function CollectionsPage() {
   const { products } = useProducts()
   
-  // Generate collections from products
-  const allCollections = [...new Set(products.map((p) => p.collection))].sort()
+  // Generate collections from products (exclude "other" collection)
+  const allCollections = [...new Set(products.map((p) => p.collection))].filter((c) => c !== "other" && c.toLowerCase() !== "other").sort()
   const collections = allCollections.map((collName) => {
     const collectionProducts = products.filter((p) => p.collection === collName)
     const firstProduct = collectionProducts[0]
