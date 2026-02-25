@@ -39,8 +39,17 @@ function CatalogContent() {
       filters.product_types = [productType]
     }
     
+    if (collectionSlug) {
+      // Convert collection slug to collection name for matching
+      const collectionName = collectionSlug
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+      filters.collections = [collectionName]
+    }
+    
     return filters
-  }, [productType])
+  }, [productType, collectionSlug])
 
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>(initialFilters)
 
@@ -52,10 +61,19 @@ function CatalogContent() {
       filters.product_types = [productType]
     }
     
+    if (collectionSlug) {
+      // Convert collection slug to collection name for matching
+      const collectionName = collectionSlug
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+      filters.collections = [collectionName]
+    }
+    
     if (Object.keys(filters).length > 0) {
       setActiveFilters(filters)
     }
-  }, [productType])
+  }, [productType, collectionSlug])
   const [sort, setSort] = useState("popular")
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [gridCols, setGridCols] = useState<3 | 4>(3)
@@ -97,6 +115,7 @@ function CatalogContent() {
           dimensions: "format",
           designs: "collection",
           surface_types: "surface",
+          collections: "collection",
         }
         const field = fieldMap[key]
         if (!field) return true
