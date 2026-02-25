@@ -191,10 +191,8 @@ export function processPriceFile(
     sheet = workbook.Sheets[cersanitSheetName]
   }
 
-  // Read by column indices - Column C (2) = Артикул, Column L (11) = Розничная цена
+  // Read by column indices - Column C (2) = Артикул, Column K (10) = Розничная цена
   const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
-  
-  console.log(`[v0] Price: Total rows in file: ${arrayData.length}`)
   
   // Find where actual data starts by looking for rows with many columns
   let dataStartRow = 0
@@ -202,27 +200,17 @@ export function processPriceFile(
     if (arrayData[i] && arrayData[i].length > 10) {
       if (!dataStartRow) {
         dataStartRow = i
-        console.log(`[v0] Price: Data starts at row ${i}`)
       }
     }
   }
   
-  // Skip to where actual data starts
-  const dataRows = arrayData.slice(dataStartRow)
-  
-  // Log first row details clearly
-  const firstRow = dataRows[0]
-  console.log(`[v0] Price: First row col2 (article): ${firstRow?.[2]}`)
-  console.log(`[v0] Price: First row col10: ${firstRow?.[10]}`)
-  console.log(`[v0] Price: First row col11: ${firstRow?.[11]}`)
-  console.log(`[v0] Price: First row col12: ${firstRow?.[12]}`)
-  console.log(`[v0] Price: First row col13: ${firstRow?.[13]}`)
-  console.log(`[v0] Price: First row length: ${firstRow?.length}`)
+  // Skip header row and move to actual data (dataStartRow is the header, so data starts at dataStartRow + 1)
+  const dataRows = arrayData.slice(dataStartRow + 1)
   
   const rows = dataRows
     .map((row: any[]) => ({
       артикул: row[2],  // Column C (index 2) = Артикул
-      "розничная цена": row[11], // Column L (index 11) = Розничная цена
+      "розничная цена": row[10], // Column K (index 10) = Розничная цена
     }))
     .filter((row) => row.артикул) // Filter out empty rows
 
