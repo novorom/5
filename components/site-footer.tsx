@@ -6,21 +6,21 @@ import { Logo } from "./logo"
 
 const footerLinks = {
   catalog: [
-    { label: "Керамическая плитка", href: "/catalog?type=keramicheskaya-plitka" },
-    { label: "Керамогранит", href: "/catalog?type=keramogranit" },
-    { label: "Мозаика", href: "/catalog?type=mozaika" },
-    { label: "Ступени", href: "/catalog?type=stupeni" },
+    { label: "Керамическая плитка", href: "/catalog?product_type=Керамическая плитка" },
+    { label: "Керамогранит", href: "/catalog?product_type=Керамогранит" },
+    { label: "Мозаика", href: "/catalog?product_type=Мозаика" },
+    { label: "Ступени", href: "/catalog?product_type=Ступени" },
   ],
   info: [
-    { label: "О компании", href: "#" },
-    { label: "Доставка и оплата", href: "#" },
-    { label: "Гарантия", href: "#" },
-    { label: "Контакты", href: "#" },
+    { label: "О компании", href: "/about" },
+    { label: "Доставка", href: "/delivery" },
+    { label: "Контакты", href: "/contacts" },
+    { label: "Коллекции", href: "/collections" },
   ],
   help: [
+    { label: "Каталог", href: "/catalog" },
     { label: "Как выбрать плитку", href: "#" },
     { label: "Уход за плиткой", href: "#" },
-    { label: "Сертификаты", href: "#" },
     { label: "Видеообзоры", href: "#" },
   ],
 }
@@ -52,9 +52,9 @@ export function SiteFooter() {
   return (
     <footer className="bg-foreground text-background" suppressHydrationWarning>
       <div className="mx-auto max-w-7xl px-4 py-12" suppressHydrationWarning>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" suppressHydrationWarning>
-          {/* Brand */}
-          <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12" suppressHydrationWarning>
+          {/* Brand - wider column */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
             <Link href="/" className="w-fit">
               <Logo className="h-16 w-auto" />
             </Link>
@@ -107,13 +107,13 @@ export function SiteFooter() {
 
           {/* Catalog links */}
           <div>
-            <h3 className="text-sm font-semibold text-background mb-4">Каталог</h3>
+            <h3 className="text-sm font-semibold text-background mb-4 uppercase tracking-widest">Каталог</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.catalog.map((link) => (
                 <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
-                    className="text-sm text-background/60 hover:text-background transition-colors"
+                    className="text-sm text-background/70 hover:text-background transition-colors"
                     suppressHydrationWarning
                   >
                     {link.label}
@@ -125,13 +125,13 @@ export function SiteFooter() {
 
           {/* Info links */}
           <div>
-            <h3 className="text-sm font-semibold text-background mb-4">Информация</h3>
+            <h3 className="text-sm font-semibold text-background mb-4 uppercase tracking-widest">Информация</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.info.map((link) => (
                 <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
-                    className="text-sm text-background/60 hover:text-background transition-colors"
+                    className="text-sm text-background/70 hover:text-background transition-colors"
                     suppressHydrationWarning
                   >
                     {link.label}
@@ -143,13 +143,13 @@ export function SiteFooter() {
 
           {/* Help links */}
           <div>
-            <h3 className="text-sm font-semibold text-background mb-4">Покупателям</h3>
+            <h3 className="text-sm font-semibold text-background mb-4 uppercase tracking-widest">Покупателям</h3>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.help.map((link) => (
                 <li key={link.label} suppressHydrationWarning>
                   <Link
                     href={link.href}
-                    className="text-sm text-background/60 hover:text-background transition-colors"
+                    className="text-sm text-background/70 hover:text-background transition-colors"
                     suppressHydrationWarning
                   >
                     {link.label}
