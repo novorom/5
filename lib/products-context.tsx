@@ -40,10 +40,6 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("admin-products")
   }
 
-  if (!isLoaded) {
-    return <>{children}</>
-  }
-
   return (
     <ProductsContext.Provider value={{ products, updateProducts, resetProducts }}>
       {children}

@@ -1,13 +1,13 @@
 "use client"
 
 import { Suspense } from "react"
-import dynamic from "next/dynamic"
+import dynamicImport from "next/dynamic"
 
 export const dynamic = "force-dynamic"
 export const revalidate = 0
 
 // Lazy load the admin content to defer context usage until client-side
-const AdminContentLazy = dynamic(() => import("./admin-content"), {
+const AdminContentLazy = dynamicImport(() => import("./admin-content"), {
   loading: () => (
     <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="text-center">
