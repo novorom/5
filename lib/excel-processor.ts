@@ -271,8 +271,14 @@ export function processPriceFile(
   // File has headers in row 6, so data starts from row 7 (index 6)
   const arrayData = utils.sheet_to_json<any[]>(sheet, { header: 1 })
   
+  console.log(`[v0] Прайс: Первые 3 строки файла (индексы 0-2):`, arrayData.slice(0, 3))
+  console.log(`[v0] Прайс: Строки 6-8 (заголовки и начало данных):`, arrayData.slice(5, 8))
+  
   // Skip first 6 rows (headers), process only data rows (starting from index 6)
   const dataRows = arrayData.slice(6)
+  
+  console.log(`[v0] Прайс: Первая строка данных (все столбцы):`, dataRows[0])
+  console.log(`[v0] Прайс: Первая строка - столбец 2 (артикул):`, dataRows[0]?.[2], ", столбец 11 (цена):`, dataRows[0]?.[11])
   
   const rows = dataRows
     .map((row: any[]) => ({
