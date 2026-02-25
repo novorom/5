@@ -4,6 +4,7 @@ import "./globals.css"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { CartProvider } from "@/lib/cart-context"
+import { ProductsProvider } from "@/lib/products-context"
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] })
 
@@ -25,11 +26,13 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${inter.className} antialiased`}>
-        <CartProvider>
-          <SiteHeader />
-          <main className="min-h-screen">{children}</main>
-          <SiteFooter />
-        </CartProvider>
+        <ProductsProvider>
+          <CartProvider>
+            <SiteHeader />
+            <main className="min-h-screen">{children}</main>
+            <SiteFooter />
+          </CartProvider>
+        </ProductsProvider>
       </body>
     </html>
   )

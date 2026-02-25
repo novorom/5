@@ -4,11 +4,11 @@ import { useState, useMemo, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { SlidersHorizontal, ChevronRight, Grid3X3, LayoutGrid } from "lucide-react"
-import { products } from "@/lib/products-data"
 import { collections } from "@/lib/mock-data"
 import { filterOptions } from "@/lib/filter-options"
 import { ProductCard } from "@/components/product-card"
 import { CatalogFilters, MobileFilterDrawer } from "@/components/catalog-filters"
+import { useProducts } from "@/lib/products-context"
 
 const sortOptions = [
   { value: "popular", label: "По популярности" },
@@ -27,6 +27,7 @@ export default function CatalogPage() {
 
 function CatalogContent() {
   const searchParams = useSearchParams()
+  const { products } = useProducts()
   const collectionSlug = searchParams.get("collection")
   const productType = searchParams.get("product_type")
   const searchQuery = searchParams.get("search") || ""
@@ -38,8 +39,17 @@ function CatalogContent() {
       filters.product_types = [productType]
     }
     
+    if (collectionSlug) {
+      // Convert collection slug to collection name for matching
+      const collectionName = collectionSlug
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+      filters.collections = [collectionName]
+    }
+    
     return filters
-  }, [productType])
+  }, [productType, collectionSlug])
 
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>(initialFilters)
 
@@ -51,10 +61,19 @@ function CatalogContent() {
       filters.product_types = [productType]
     }
     
+    if (collectionSlug) {
+      // Convert collection slug to collection name for matching
+      const collectionName = collectionSlug
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+      filters.collections = [collectionName]
+    }
+    
     if (Object.keys(filters).length > 0) {
       setActiveFilters(filters)
     }
-  }, [productType])
+  }, [productType, collectionSlug])
   const [sort, setSort] = useState("popular")
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [gridCols, setGridCols] = useState<3 | 4>(3)
@@ -96,6 +115,7 @@ function CatalogContent() {
           dimensions: "format",
           designs: "collection",
           surface_types: "surface",
+          collections: "collection",
         }
         const field = fieldMap[key]
         if (!field) return true

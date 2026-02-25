@@ -14,10 +14,10 @@ import {
   Plus,
   MapPin,
 } from "lucide-react"
-import { products } from "@/lib/products-data"
 import { ProductGallery } from "@/components/product-gallery"
 import { ProductCard } from "@/components/product-card"
 import { useCart } from "@/lib/cart-context"
+import { useProducts } from "@/lib/products-context"
 
 type TabId = "description" | "specs" | "delivery"
 
@@ -25,6 +25,7 @@ export default function ProductPage() {
   const params = useParams()
   const router = useRouter()
   const { addItem } = useCart()
+  const { products } = useProducts()
   const slug = params.slug as string
   const product = products.find((p) => p.slug === slug) || products[0]
   const [activeTab, setActiveTab] = useState<TabId>("description")
@@ -66,10 +67,10 @@ export default function ProductPage() {
     { label: "Материал", value: product.material_type },
     { label: "Назначение", value: product.application },
     { label: "Толщина", value: product.thickness },
-    { label: "Штук в коробке", value: String(product.pieces_per_box) },
-    { label: "М\u00B2 в коробке", value: String(product.sqm_per_box) },
+    ...(product.pieces_per_box ? [{ label: "Штук в коробке", value: String(product.pieces_per_box) }] : []),
+    ...(product.sqm_per_box ? [{ label: "М\u00B2 в коробке", value: String(product.sqm_per_box) }] : []),
     { label: "Страна", value: product.country },
-  ]
+  ].filter(spec => spec.value && spec.value !== "undefined")
 
   return (
     <div className="bg-muted/30 min-h-screen">
@@ -340,7 +341,7 @@ export default function ProductPage() {
                   <h3 className="text-lg font-semibold text-foreground mb-3">Оплата</h3>
                   <p className="text-sm text-foreground/80 leading-relaxed">
                     Наличный и безналичный расчёт. Для юридических лиц -- оплата по счёту с НДС.
-                    Возможна оплата картой при получении на складе.
+                    Возмо��на оплата картой при получении на складе.
                   </p>
                 </div>
               </div>
