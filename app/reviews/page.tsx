@@ -45,7 +45,7 @@ export default function ReviewsPage() {
             </div>
             <div className="flex items-center gap-2 text-sm text-foreground/70">
               <MapPin className="h-4 w-4" />
-              <span>Наш магазин работает в Санкт-Петербурге с 2019 года</span>
+              <span>Наш магазин работает в Санкт-Петербурге с 2011 года</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-foreground/70">
               <Calendar className="h-4 w-4" />
