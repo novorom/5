@@ -3,7 +3,10 @@ import csv
 # Read CSV and extract sqm_per_box data
 products_map = {}
 
-with open('scripts/full_products.csv', 'r', encoding='utf-8') as f:
+# Use absolute path
+csv_path = '/vercel/share/v0-project/scripts/full_products.csv'
+
+with open(csv_path, 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter=',')
     for row in reader:
         if row:
