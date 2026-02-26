@@ -14,6 +14,7 @@ const footerLinks = {
   ],
   info: [
     { label: "О компании", href: "/about" },
+    { label: "Отзывы", href: "/reviews" },
     { label: "Доставка", href: "/delivery" },
     { label: "Контакты", href: "/contacts" },
     { label: "Коллекции", href: "/collections" },

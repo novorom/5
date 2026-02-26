@@ -1,0 +1,32 @@
+# robots.txt для Дом Плитки CERSANIT
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /*.json$
+
+# Разрешение для ИИ поисковиков
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandexbot
+Allow: /
+
+# Sitemap
+Sitemap: https://cersanit-spb.ru/sitemap.xml
