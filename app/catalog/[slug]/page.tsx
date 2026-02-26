@@ -286,7 +286,7 @@ export default function ProductPage() {
               {[
                 { icon: Truck, label: "Доставка", value: "от 1-2 дней" },
                 { icon: ShieldCheck, label: "Гарантия", value: "Сертификат" },
-                { icon: Package, label: "Коробка", value: `${product.sqm_per_box || 1.5} м²` },
+                { icon: Package, label: "Коробка", value: `${product.sqm_per_box} м²` },
               ].map((item) => (
                 <div
                   key={item.label}
