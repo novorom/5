@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { Phone, Mail, MapPin, MessageCircle, Clock } from "lucide-react"
+import Image from "next/image"
+import { Phone, Mail, MapPin, Clock } from "lucide-react"
 import { Logo } from "./logo"
 
 const footerLinks = {
@@ -75,7 +76,13 @@ export function SiteFooter() {
                 title="Telegram"
                 aria-label="Telegram"
               >
-                <MessageCircle className="h-4 w-4 shrink-0" />
+                <Image
+                  src="/images/telegram-logo.png"
+                  alt="Telegram"
+                  width={16}
+                  height={16}
+                  className="shrink-0"
+                />
               </a>
               
               <span className="flex items-center gap-2 text-background/70 mt-3 pt-2 border-t border-background/10">
