@@ -282,11 +282,10 @@ export default function ProductPage() {
             </div>
 
             {/* Quick info */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
               {[
                 { icon: Truck, label: "Доставка", value: "от 1-2 дней" },
                 { icon: ShieldCheck, label: "Гарантия", value: "Сертификат" },
-                { icon: Package, label: "Коробка", value: `${product.sqm_per_box} м²` },
               ].map((item) => (
                 <div
                   key={item.label}
