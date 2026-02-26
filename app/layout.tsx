@@ -19,6 +19,11 @@ export const metadata: Metadata = {
     "Магазин плитки Cersanit в Санкт-Петербурге. Более 750 наименований керамической плитки, керамогранита и мозаики в наличии на складе в Янино. Доставка по СПб и ЛО от 1 дня. Самовывоз бесплатно.",
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
   openGraph: {
     title: "Купить плитку Cersanit в СПб -- доставка со склада Янино",
     description:
