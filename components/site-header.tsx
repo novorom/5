@@ -53,9 +53,9 @@ export function SiteHeader() {
               <Image 
                 src="/images/telegram-logo.svg" 
                 alt="Telegram" 
-                width={16} 
-                height={16}
-                className="h-3.5 w-3.5 shrink-0"
+                width={32} 
+                height={32}
+                className="h-7 w-7 shrink-0"
               />
             </a>
           </div>

@@ -74,9 +74,9 @@ export function SiteFooter() {
                 <Image 
                   src="/images/telegram-logo.svg" 
                   alt="Telegram" 
-                  width={16} 
-                  height={16}
-                  className="h-4 w-4 shrink-0"
+                  width={32} 
+                  height={32}
+                  className="h-8 w-8 shrink-0"
                 />
               </a>
               
