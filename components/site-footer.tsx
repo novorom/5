@@ -69,9 +69,13 @@ export function SiteFooter() {
                 <Mail className="h-4 w-4 shrink-0" />
                 novorom@mail.ru
               </a>
-              <a href="https://t.me/flyroman" className="flex items-center gap-2 text-background/70 hover:text-background transition-colors">
+              <a 
+                href="https://t.me/flyroman" 
+                className="flex items-center gap-2 text-background/70 hover:text-background transition-colors"
+                title="Telegram"
+                aria-label="Telegram"
+              >
                 <MessageCircle className="h-4 w-4 shrink-0" />
-                @flyroman
               </a>
               
               <span className="flex items-center gap-2 text-background/70 mt-3 pt-2 border-t border-background/10">

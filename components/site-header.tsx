@@ -48,9 +48,13 @@ export function SiteHeader() {
               <span>+7 (905) 205-09-00</span>
             </a>
             <span className="text-primary-foreground/70">Ежедневно 10:00-18:00</span>
-            <a href="https://t.me/flyroman" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+            <a 
+              href="https://t.me/flyroman" 
+              className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+              title="Telegram"
+              aria-label="Telegram"
+            >
               <MessageCircle className="h-3.5 w-3.5 shrink-0" />
-              <span>@flyroman</span>
             </a>
           </div>
         </div>
