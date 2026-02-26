@@ -15,8 +15,6 @@ export default function CartPage() {
 
   const handleCheckout = async (orderData: OrderData) => {
     try {
-      console.log('[v0] Sending order to API...', { items: items.length, total })
-      
       const response = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,16 +25,9 @@ export default function CartPage() {
         }),
       })
 
-      console.log('[v0] API response status:', response.status)
-
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        console.error('[v0] API error response:', errorData)
-        throw new Error(errorData.error || `API error: ${response.status}`)
+        throw new Error('Failed to submit order')
       }
-
-      const result = await response.json()
-      console.log('[v0] Order submitted successfully:', result)
 
       // Clear cart and show success message
       clearCart()
@@ -46,9 +37,7 @@ export default function CartPage() {
       alert('Спасибо! Ваш заказ принят. Мы свяжемся с вами в ближайшее время.')
       router.push('/catalog')
     } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : 'Ошибка при отправке заказа'
-      console.error('[v0] Checkout error:', errorMsg)
-      throw new Error(errorMsg)
+      throw new Error('Ошибка при отправке заказа. Пожалуйста, попробуйте позже.')
     }
   }
 
