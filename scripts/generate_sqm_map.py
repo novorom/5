@@ -1,6 +1,6 @@
 import csv
 
-csv_file = '/vercel/share/v0-project/scripts/full_products.csv'
+csv_file = 'scripts/full_products.csv'
 output_file = '/tmp/sqm_mapping.json'
 
 # Parse CSV and create mapping
