@@ -2,13 +2,14 @@
 import csv
 import re
 
-# Read the correct CSV file
-csv_file = 'scripts/full_products_correct.csv'
-products_data_file = 'lib/products-data.ts'
+# Use absolute paths
+csv_file = '/vercel/share/v0-project/scripts/full_products_update.csv'
+products_data_file = '/vercel/share/v0-project/lib/products-data.ts'
 
 sqm_map = {}
 
-print("[v0] Parsing CSV to extract sqm_per_box values...")
+print(f"[v0] Reading CSV from: {csv_file}")
+print(f"[v0] Updating: {products_data_file}")
 
 with open(csv_file, 'r', encoding='utf-8') as f:
     reader = csv.reader(f)
@@ -38,8 +39,8 @@ with open(products_data_file, 'r', encoding='utf-8') as f:
 updates = 0
 for product_code, sqm_value in sqm_map.items():
     # Pattern to find products and update their sqm_per_box
-    pattern = f'id: "{product_code}",(.*?)sqm_per_box: [0-9.]+,'
-    replacement = f'id: "{product_code}",\\1sqm_per_box: {sqm_value},'
+    pattern = f'id: "{product_code}",(.*?)sqm_per_box: [0-9.]+'
+    replacement = f'id: "{product_code}",\\1sqm_per_box: {sqm_value}'
     
     new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
     if new_content != content:
