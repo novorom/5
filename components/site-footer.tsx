@@ -32,7 +32,7 @@ const socialLinks = [
   {
     name: 'Avito',
     url: 'https://www.avito.ru/brands/i1860592?src=sharing',
-    logo: '/images/avito-logo.svg',
+    logo: '/images/avito-logo.png',
   },
   {
     name: 'VK',
