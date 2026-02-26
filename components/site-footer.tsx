@@ -30,24 +30,29 @@ const footerLinks = {
 
 const socialLinks = [
   {
-    icon: '🏪',
     name: 'Avito',
     url: 'https://www.avito.ru/brands/i1860592?src=sharing',
+    logo: '/images/avito-logo.svg',
   },
   {
-    icon: '📱',
     name: 'VK',
     url: 'https://vk.com/tilebox',
+    logo: '/images/vk-logo.svg',
   },
   {
-    icon: '👥',
     name: 'Facebook',
     url: 'https://www.facebook.com/groups/1371104416315103',
+    logo: '/images/facebook-logo.svg',
   },
   {
-    icon: '📷',
     name: 'Instagram',
     url: 'https://www.instagram.com/keraplit/',
+    logo: '/images/instagram-logo.svg',
+  },
+  {
+    name: 'YouTube',
+    url: 'https://www.youtube.com/@novorom',
+    logo: '/images/youtube-logo.svg',
   },
 ]
 
@@ -148,7 +153,7 @@ export function SiteFooter() {
           {/* Social Media - rightmost column */}
           <div>
             <h3 className="text-sm font-semibold text-background mb-4 uppercase tracking-widest">Найдите нас</h3>
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-4 flex-wrap">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
@@ -156,9 +161,16 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={social.name}
-                  className="text-2xl text-background/70 hover:text-background transition-colors"
+                  aria-label={social.name}
+                  className="hover:opacity-80 transition-opacity"
                 >
-                  {social.icon}
+                  <Image
+                    src={social.logo}
+                    alt={social.name}
+                    width={24}
+                    height={24}
+                    className="h-6 w-6"
+                  />
                 </a>
               ))}
             </div>
