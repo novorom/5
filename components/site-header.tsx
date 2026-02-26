@@ -2,9 +2,8 @@
 
 import { useState, KeyboardEvent } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Search, Heart, ShoppingCart, Menu, X, Phone } from "lucide-react"
+import { Search, Heart, ShoppingCart, Menu, X, Phone, MessageCircle } from "lucide-react"
 import { Logo } from "./logo"
 import { useCart } from "@/lib/cart-context"
 
@@ -49,19 +48,9 @@ export function SiteHeader() {
               <span>+7 (905) 205-09-00</span>
             </a>
             <span className="text-primary-foreground/70">Ежедневно 10:00-18:00</span>
-            <a 
-              href="https://t.me/flyroman" 
-              className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
-              title="Telegram"
-              aria-label="Telegram"
-            >
-              <Image
-                src="/images/telegram-logo.png"
-                alt="Telegram"
-                width={16}
-                height={16}
-                className="shrink-0"
-              />
+            <a href="https://t.me/flyroman" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+              <MessageCircle className="h-3.5 w-3.5 shrink-0" />
+              <span>@flyroman</span>
             </a>
           </div>
         </div>
