@@ -57,7 +57,7 @@ export const products: Product[] = [
     length: "59,8",
     thickness: "0,75",
     pieces_per_box: 6,
-    sqm_per_box: 0.5,
+    sqm_per_box: undefined,
     price_retail: 1450,
     currency: "RUB",
     main_image: "https://pvi.cersanit.ru/upload/uf/8c9/LS4O096.jpg",
@@ -5548,7 +5548,7 @@ export const products: Product[] = [
     format: "unknown",
     surface: "матовая",
     color: "unknown",
-    application: "Универсаль��ый",
+    application: "Универсальный",
     price_retail: 1000
   },
   {
