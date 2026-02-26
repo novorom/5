@@ -26,7 +26,10 @@ sqm_values = {
 
 import re
 
+# Use absolute path directly
 file_path = '/vercel/share/v0-project/lib/products-data.ts'
+
+print(f"[v0] Using path: {file_path}")
 
 with open(file_path, 'r', encoding='utf-8') as f:
     content = f.read()
