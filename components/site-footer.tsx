@@ -47,7 +47,7 @@ const socialLinks = [
   {
     name: 'Instagram',
     url: 'https://www.instagram.com/keraplit/',
-    logo: '/images/instagram-logo.svg',
+    logo: '/images/instagram-logo.png',
   },
   {
     name: 'YouTube',
