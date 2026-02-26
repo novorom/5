@@ -916,6 +916,8 @@ export const products: Product[] = [
     material_type: "Керамогранит",
     application: "Универсальный",
     thickness: "0,8",
+    pieces_per_box: 6,
+    sqm_per_box: 1.174,
     price_retail: 1317,
     price_official: 1270.81,
     currency: "RUB",
